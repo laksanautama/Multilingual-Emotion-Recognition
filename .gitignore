@@ -1,0 +1,20 @@
+# Python Virtual Environment
+.mer/
+__pycache__/
+*.pyc
+*.o
+
+# VS Code
+.vscode/
+
+# Data and Models
+data/*
+*.pt             # PyTorch model files
+*.h5             # Keras/TensorFlow model files
+*.ckpt           # Checkpoint files
+
+# API Keys and Secrets
+.env
+
+# DS_Store files
+.DS_Store
