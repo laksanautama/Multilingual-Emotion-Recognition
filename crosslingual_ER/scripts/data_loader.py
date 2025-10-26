@@ -1,13 +1,17 @@
 import os
 import pandas as pd
+from .model_configs import DATA_CONFIG
 from datasets import load_dataset, Dataset, concatenate_datasets
 from huggingface_hub import login
 
 
 TEST_DATA_DIR = os.path.join(
     os.path.dirname(os.path.dirname(__file__)),
-    'data', 
-    'test_data'
+    DATA_CONFIG["TEST_DATA_DIR"]
+)
+CACHE_DIR = os.path.join(
+    os.path.dirname(os.path.dirname(os.path.dirname(__file__))),
+    DATA_CONFIG["CACHE_DIR"]
 )
 
 def load_target_test_data(filename: str):
@@ -58,4 +62,6 @@ def load_huggingface_dataset(dataset_name: str, dataset_lang: list):
     if loaded_datasets:
         combined_dataset = concatenate_datasets(loaded_datasets)
         print(f"Combined dataset contains {len(combined_dataset)} samples from languages: {', '.join(dataset_lang)}")
+        combined_dataset.save_to_disk(CACHE_DIR)
+        print(f"Combined dataset saved to cache directory: {CACHE_DIR}")
         return combined_dataset
