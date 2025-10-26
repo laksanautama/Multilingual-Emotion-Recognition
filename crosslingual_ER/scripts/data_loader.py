@@ -1,6 +1,6 @@
 import os
 import pandas as pd
-from datasets import load_dataset, Dataset, concat_datasets
+from datasets import load_dataset, Dataset, concatenate_datasets
 from huggingface_hub import login
 
 
@@ -41,7 +41,7 @@ def load_huggingface_dataset(dataset_name: str, dataset_lang: list):
             loaded_datasets.append(dataset)
             loaded = True
         except ValueError as e:
-            if "Split 'train' not found" in str(e) or "Split parameter must be one of" in str(e):
+            if "Split 'train' not found" in str(e) or "Should be one of ['dev', 'test']" in str(e):
                 try:
                     dataset = load_dataset(dataset_name, lang, split='dev')
                     print(f"Successfully loaded {lang} samples with split: 'dev'")
@@ -56,6 +56,6 @@ def load_huggingface_dataset(dataset_name: str, dataset_lang: list):
             print(f"Error loading dataset {lang}: {e}")
     
     if loaded_datasets:
-        combined_dataset = concat_datasets(loaded_datasets)
+        combined_dataset = concatenate_datasets(loaded_datasets)
         print(f"Combined dataset contains {len(combined_dataset)} samples from languages: {', '.join(dataset_lang)}")
         return combined_dataset

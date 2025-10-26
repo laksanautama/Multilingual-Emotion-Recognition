@@ -32,7 +32,7 @@ if __name__ == "__main__":
         
         if choice == '1':
             print("Running Crosslingual Emotion Recognition...")
-            """todo"""
+            run(keys)
         elif choice == '2':
             while True:
                 task2_choice = task_2_selection()

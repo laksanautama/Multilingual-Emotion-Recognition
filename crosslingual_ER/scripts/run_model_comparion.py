@@ -8,9 +8,10 @@ def run(api_keys: dict):
         test_dataset = load_target_test_data(DATA_CONFIG["TARGET_TEST_FILENAME"])
         source_dataset = load_huggingface_dataset(DATA_CONFIG["SOURCE_HF_DATASET"], DATA_CONFIG["DATASET_LANGUAGES"])
         print("Datasets loaded successfully.")
-        # Further processing and model comparison logic would go here.
+
     except FileNotFoundError as e:
         print(f"FATAL ERROR: {e}")
         print("Please ensure the test data file is present in the data/test_data directory.")
+    
     except Exception as e:
         print(f"An unexpected error occurred: {e}")

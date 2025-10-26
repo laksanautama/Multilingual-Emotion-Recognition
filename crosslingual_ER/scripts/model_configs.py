@@ -1,7 +1,7 @@
 #1. DATA CONFIGURATIONS
 # ------------------------------------------
 DATA_CONFIG = {
-    "TARGET_TEST_FILENAME": "Balinese_Storietter.csv",
+    "TARGET_TEST_FILENAME": "balinesse_storiette.csv",
     "SOURCE_HF_DATASET": "brighter-dataset/BRIGHTER-emotion-categories",
     "LABELS": ["anger", "disgust", "fear", "joy", "sadness", "surprise"],
     "TRAIN_TEXT_COLUMN": "text",
