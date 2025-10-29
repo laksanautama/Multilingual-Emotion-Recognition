@@ -9,6 +9,7 @@ DATA_CONFIG = {
     "TRAIN_TEXT_COLUMN": "text",
     "TEST_TEXT_COLUMN": "sentence",
     "NUM_LABELS": 6,
+    "LABEL_COLUMN": "labels",
     "DATASET_LANGUAGES": ["ind", "jav", "sun"]
 }
 
@@ -24,10 +25,10 @@ MODEL_PATHS = {
 #3. TRAINING CONFIGURATIONS
 # ------------------------------------------
 TRAINING_CONFIG = {
-    "LEARNING_RATE": 2e-5,
-    "BATCH_SIZE": 16,
-    "EPOCHS": 100,
-    "MAX_SEQ_LENGTH": 128,
+    "LEARNING_RATE": 1e-5,
+    "BATCH_SIZE": 8,
+    "EPOCHS": 10,
+    "MAX_SEQ_LENGTH": 256,
     "WEIGHT_DECAY": 0.01,
     "WARMUP_STEPS": 0,
     "SEED": 42
