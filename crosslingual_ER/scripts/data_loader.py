@@ -3,6 +3,10 @@ import pandas as pd
 from .model_configs import DATA_CONFIG
 from datasets import load_dataset, Dataset, concatenate_datasets
 from huggingface_hub import login
+import numpy as np
+import torch
+from sklearn.preprocessing import MultiLabelBinarizer 
+
 
 
 TEST_DATA_DIR = os.path.join(
@@ -13,6 +17,46 @@ CACHE_DIR = os.path.join(
     os.path.dirname(os.path.dirname(os.path.dirname(__file__))),
     DATA_CONFIG["CACHE_DIR"]
 )
+
+def pos_weight(labels):
+    """ Calculate positive weight for each label"""
+    labels_np = np.array(labels)
+    pos_weights = []
+    num_labels = DATA_CONFIG["NUM_LABELS"]
+
+    for i in range(num_labels):
+        pos = labels_np[:, i].sum()
+        neg = labels_np.shape[0] - pos
+        pos_weight = (neg / pos) if pos > 0 else 1.0
+        pos_weights.append(pos_weight)
+    
+        pos_weights = torch.tensor(pos_weights, dtype=torch.float)
+    return pos_weights
+
+def get_label_binarizer(dataset):
+    """ Get MultiLabelBinarizer for labels """
+    columns_name = DATA_CONFIG["LABELS"]
+    mlb = MultiLabelBinarizer()
+    mlb.fit([columns_name])
+
+    emotion_string = dataset['emotions']
+    if not isinstance(emotion_string, str):
+        if isinstance(emotion_string, list):
+            emotion_list = [str(e).strip().strip("'\"") for e in emotion_string if isinstance(e, str) and str(e).strip()]
+        else:
+            dataset['labels'] = np.zeros(len(columns_name), dtype=np.float32)
+            return dataset
+    else:
+        emotion_list = [str(e).strip().strip("'\"") for e in emotion_string.strip("[]").split(',') if str(e).strip()]
+
+    if emotion_list:
+        multihot_vector = mlb.transform([emotion_list])[0]
+    else:
+        multi_hot_vector = np.zeros(len(columns_name), dtype=np.float32)
+    
+    dataset['labels'] = np.array(multi_hot_vector, dtype=np.float32)
+    return dataset
+
 
 def load_target_test_data(filename: str):
     """ Load balinese language test data 
@@ -35,7 +79,8 @@ def load_target_test_data(filename: str):
 
         if '__index_level_0__' in target_dataset.column_names:
             target_dataset = target_dataset.remove_columns(["__index_level_0__"])
-        return target_dataset
+        mhe_dataset = target_dataset.map(get_label_binarizer)
+        return mhe_dataset
     
     except Exception as e:
         print(f"Error loading {filename}: {e}")
@@ -76,8 +121,10 @@ def load_huggingface_dataset(dataset_name: str, dataset_lang: list, split: str, 
     
     if loaded_datasets:
         combined_dataset = concatenate_datasets(loaded_datasets)
+        mhe_dataset = combined_dataset.map(get_label_binarizer)
+        pos_weights_label = pos_weight(mhe_dataset['labels'])
         print(f"Combined dataset contains {len(combined_dataset)} samples from languages: {', '.join(dataset_lang)} with split: {split}")
         SPLIT_CACHE_DIR = os.path.join(CACHE_DIR, split)
-        combined_dataset.save_to_disk(SPLIT_CACHE_DIR)
+        mhe_dataset.save_to_disk(SPLIT_CACHE_DIR)
         print(f"Combined {split} dataset saved to cache directory: {SPLIT_CACHE_DIR}")
-        return combined_dataset
+        return mhe_dataset, pos_weights_label
