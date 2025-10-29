@@ -1,6 +1,7 @@
 import sys
 from utils.api_key_handler import load_environment_variables
 from crosslingual_ER.scripts.run_model_comparion import run
+import argparse
 # from crosslingual_ER.scripts.run_model_comparion import run_model_comparison 
 
 
@@ -24,7 +25,14 @@ def task_2_selection():
     choice = input("Select a method number (1, 2, or 3): ")
     return choice
 
-if __name__ == "__main__":
+def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--lm_name', type=str, default='indolem/indobert-base-uncased')
+    parser.add_argument('--llm_name', type=str, default='gemini-2.5')
+    parser.add_argument('--adaptation_method', type=str, default='few-shot')
+    args = parser.parse_args()
+
+
     keys = load_environment_variables()
     
     while True:
@@ -52,3 +60,7 @@ if __name__ == "__main__":
             sys.exit(0)
         else:
             print("Invalid choice. Please select a valid task number.")
+
+
+if __name__ == "__main__":
+    main()
