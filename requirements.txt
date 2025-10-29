@@ -1,3 +1,4 @@
+accelerate==1.11.0
 aiohappyeyeballs==2.6.1
 aiohttp==3.13.1
 aiosignal==1.4.0
@@ -33,20 +34,25 @@ httpcore==1.0.9
 httpx==0.28.1
 huggingface-hub==0.36.0
 idna @ file:///private/var/folders/k1/30mswbxs7r1g6zwn8y4fyt500000gp/T/abs_a12xpo84t2/croot/idna_1714398852854/work
+Jinja2==3.1.6
 jsonpatch @ file:///private/var/folders/k1/30mswbxs7r1g6zwn8y4fyt500000gp/T/abs_3ajyoz8zoj/croot/jsonpatch_1714483362270/work
 jsonpointer==2.1
 libmambapy @ file:///private/var/folders/nz/j6p8yfhx1mv_0grj5xl4650h0000gp/T/abs_8fxbc14zt9/croot/mamba-split_1734469521691/work/libmambapy
 markdown-it-py @ file:///Users/builder/cbouss/perseverance-python-buildout/croot/markdown-it-py_1699237863445/work
+MarkupSafe==3.0.3
 mdurl @ file:///Users/builder/cbouss/perseverance-python-buildout/croot/mdurl_1699237660008/work
 menuinst @ file:///private/var/folders/nz/j6p8yfhx1mv_0grj5xl4650h0000gp/T/abs_66is8p984e/croot/menuinst_1738943433761/work
+mpmath==1.3.0
 multidict==6.7.0
 multiprocess==0.70.16
+networkx==3.5
 numpy==2.3.4
 packaging @ file:///private/var/folders/nz/j6p8yfhx1mv_0grj5xl4650h0000gp/T/abs_a6_qk3qyg7/croot/packaging_1734472142254/work
 pandas==2.3.3
 platformdirs @ file:///Users/builder/cbouss/perseverance-python-buildout/croot/platformdirs_1701803010714/work
 pluggy @ file:///private/var/folders/nz/j6p8yfhx1mv_0grj5xl4650h0000gp/T/abs_bei6q1cvvt/croot/pluggy_1733169621717/work
 propcache==0.4.1
+psutil==7.1.2
 pyarrow==22.0.0
 pycosat @ file:///private/var/folders/nz/j6p8yfhx1mv_0grj5xl4650h0000gp/T/abs_61k1o_oje7/croot/pycosat_1736868429741/work
 pycparser @ file:///tmp/build/80754af9/pycparser_1636541352034/work
@@ -58,14 +64,20 @@ python-dateutil==2.9.0.post0
 python-dotenv==1.1.1
 pytz==2025.2
 PyYAML==6.0.3
+regex==2025.10.23
 requests @ file:///private/var/folders/nz/j6p8yfhx1mv_0grj5xl4650h0000gp/T/abs_ee45nsd33z/croot/requests_1730999134038/work
 rich @ file:///private/var/folders/k1/30mswbxs7r1g6zwn8y4fyt500000gp/T/abs_034myiu7pr/croot/rich_1732638981241/work
 ruamel.yaml @ file:///private/var/folders/nz/j6p8yfhx1mv_0grj5xl4650h0000gp/T/abs_35yvtl3p84/croot/ruamel.yaml_1727980165481/work
 ruamel.yaml.clib @ file:///private/var/folders/nz/j6p8yfhx1mv_0grj5xl4650h0000gp/T/abs_70l_orv46q/croot/ruamel.yaml.clib_1727769819918/work
+safetensors==0.6.2
 setuptools==75.8.0
 six==1.17.0
 sniffio==1.3.1
+sympy==1.14.0
+tokenizers==0.22.1
+torch==2.9.0
 tqdm @ file:///private/var/folders/nz/j6p8yfhx1mv_0grj5xl4650h0000gp/T/abs_5642tzrprr/croot/tqdm_1738943467095/work
+transformers==4.57.1
 truststore @ file:///private/var/folders/k1/30mswbxs7r1g6zwn8y4fyt500000gp/T/abs_a1qa3ogm4o/croot/truststore_1736550138575/work
 typing_extensions @ file:///private/var/folders/k1/30mswbxs7r1g6zwn8y4fyt500000gp/T/abs_0b3jpv_f79/croot/typing_extensions_1734714864260/work
 tzdata==2025.2
