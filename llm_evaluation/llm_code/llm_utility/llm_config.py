@@ -16,7 +16,7 @@ PROMPT_CONFIG = {
                     Input: {input}
                     Answer:""",
 
-    "IND_SUFFIX" : """ Analisis teks berikut apakah termasuk ungkapan {emotion}. Jelaskan alasan Anda secara singkat dan disertai dengan 'Jawaban:' 'ya' atau 'tidak'.
+    "IND_PREFFIX" : """ Analisis teks berikut apakah termasuk ungkapan {emotion}. Jelaskan alasan Anda secara singkat dan disertai dengan 'Jawaban:' 'ya' atau 'tidak'.
                     Berikut ini adalah beberapa contoh:
                     """
 
