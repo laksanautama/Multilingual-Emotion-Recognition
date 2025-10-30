@@ -30,7 +30,7 @@ def pos_weight(labels):
         pos_weight = (neg / pos) if pos > 0 else 1.0
         pos_weights.append(pos_weight)
     
-        pos_weights = torch.tensor(pos_weights, dtype=torch.float)
+    pos_weights = torch.tensor(pos_weights, dtype=torch.float)
     return pos_weights
 
 def get_label_binarizer(dataset):
@@ -50,7 +50,7 @@ def get_label_binarizer(dataset):
         emotion_list = [str(e).strip().strip("'\"") for e in emotion_string.strip("[]").split(',') if str(e).strip()]
 
     if emotion_list:
-        multihot_vector = mlb.transform([emotion_list])[0]
+        multi_hot_vector = mlb.transform([emotion_list])[0]
     else:
         multi_hot_vector = np.zeros(len(columns_name), dtype=np.float32)
     
@@ -58,7 +58,7 @@ def get_label_binarizer(dataset):
     return dataset
 
 
-def load_target_test_data(filename: str):
+def load_target_test_data(filename: str, cross_lingual: bool = False):
     """ Load balinese language test data 
     from CSV file."""
 
@@ -71,17 +71,20 @@ def load_target_test_data(filename: str):
     try:
         test_df = pd.read_csv(file_path)
         print(f"Successfully loaded {len(test_df)} samples from {filename}.")
-        try:
-            target_dataset = Dataset.from_pandas(test_df)
-        except Exception as e:
-            print(f"Error converting test set from DataFrame to Dataset: {e}")
-            raise
+        
+        if cross_lingual:
+            try:
+                target_dataset = Dataset.from_pandas(test_df)
+            except Exception as e:
+                print(f"Error converting test set from DataFrame to Dataset: {e}")
+                raise
 
-        if '__index_level_0__' in target_dataset.column_names:
-            target_dataset = target_dataset.remove_columns(["__index_level_0__"])
-        mhe_dataset = target_dataset.map(get_label_binarizer)
-        return mhe_dataset
-    
+            if '__index_level_0__' in target_dataset.column_names:
+                target_dataset = target_dataset.remove_columns(["__index_level_0__"])
+                mhe_dataset = target_dataset.map(get_label_binarizer)
+                return mhe_dataset
+        else:
+            return test_df
     except Exception as e:
         print(f"Error loading {filename}: {e}")
         raise
