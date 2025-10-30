@@ -10,7 +10,10 @@ DATA_CONFIG = {
     "TEST_TEXT_COLUMN": "sentence",
     "NUM_LABELS": 6,
     "LABEL_COLUMN": "labels",
-    "DATASET_LANGUAGES": ["ind", "jav", "sun"]
+    "DATASET_LANGUAGES": ["ind", "jav", "sun"],
+    "TRAIN_SPLIT_SIZE": 0.5,
+    "NUM_TRAIN_SAMPLES_PER_CLASS": 10,
+    "NUM_VAL_SAMPLES": 20
 }
 
 #2. MODEL CONFIGURATIONS
