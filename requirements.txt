@@ -26,6 +26,7 @@ datasets==4.3.0
 dill==0.4.0
 distro @ file:///private/var/folders/nz/j6p8yfhx1mv_0grj5xl4650h0000gp/T/abs_ddkyz0575y/croot/distro_1714488254309/work
 dotenv==0.9.9
+faiss-cpu==1.12.0
 filelock==3.20.0
 filetype==1.2.0
 frozendict @ file:///private/var/folders/k1/30mswbxs7r1g6zwn8y4fyt500000gp/T/abs_8b0cest_id/croot/frozendict_1713194839836/work
@@ -50,6 +51,7 @@ jiter==0.11.1
 joblib==1.5.2
 jsonpatch @ file:///private/var/folders/k1/30mswbxs7r1g6zwn8y4fyt500000gp/T/abs_3ajyoz8zoj/croot/jsonpatch_1714483362270/work
 jsonpointer==2.1
+langchain==1.0.3
 langchain-classic==1.0.0
 langchain-community==0.4.1
 langchain-core==1.0.1
@@ -57,6 +59,10 @@ langchain-google-genai==3.0.0
 langchain-groq==1.0.0
 langchain-openai==1.0.1
 langchain-text-splitters==1.0.0
+langgraph==1.0.2
+langgraph-checkpoint==3.0.0
+langgraph-prebuilt==1.0.2
+langgraph-sdk==0.2.9
 langsmith==0.4.38
 libmambapy @ file:///private/var/folders/nz/j6p8yfhx1mv_0grj5xl4650h0000gp/T/abs_8fxbc14zt9/croot/mamba-split_1734469521691/work/libmambapy
 markdown-it-py @ file:///Users/builder/cbouss/perseverance-python-buildout/croot/markdown-it-py_1699237863445/work
@@ -72,6 +78,7 @@ networkx==3.5
 numpy==2.3.4
 openai==2.6.1
 orjson==3.11.4
+ormsgpack==1.11.0
 packaging==23.2
 pandas==2.3.3
 platformdirs @ file:///Users/builder/cbouss/perseverance-python-buildout/croot/platformdirs_1701803010714/work
