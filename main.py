@@ -1,6 +1,7 @@
 import sys
-from utils.api_key_handler import load_environment_variables
+from utils import load_environment_variables
 from crosslingual_ER.scripts.run_model_comparion import run
+from llm_evaluation.llm_code.few_shot_adaptation.run_few_shot import run_fs
 import argparse
 # from crosslingual_ER.scripts.run_model_comparion import run_model_comparison 
 
@@ -18,9 +19,11 @@ def task_selection():
 def task_2_selection():
     """Presents the sub-menu for LLM Evaluation methods."""
     print("\n--- Task 2: LLM Emotion Recognition Sub-Menu ---")
-    print("1: Perform LoRA Fine-Tuning and Evaluation")
-    print("2: Perform RAG Pipeline Evaluation")
-    print("3: Go back to Main Menu")
+    print("1: Perform Few-Shot Adaptation")
+    print("2: Perform LoRA Fine-Tuning and Evaluation")
+    print("3: Perform RAG Pipeline Evaluation")
+    print("4: Go back to Main Menu")
+
     
     choice = input("Select a method number (1, 2, or 3): ")
     return choice
@@ -28,8 +31,8 @@ def task_2_selection():
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--lm_name', type=str, default='indolem/indobert-base-uncased')
-    parser.add_argument('--llm_name', type=str, default='gemini-2.5')
-    parser.add_argument('--adaptation_method', type=str, default='few-shot')
+    parser.add_argument('--llm_name', type=str, default='gemini-2.5-flash')
+    # parser.add_argument('--adaptation_method', type=str, default='few-shot')
     args = parser.parse_args()
 
 
@@ -45,12 +48,15 @@ def main():
             while True:
                 task2_choice = task_2_selection()
                 if task2_choice == '1':
-                    print("Running LoRA Fine-Tuning and Evaluation...")
-                    # run_model_comparison.run_lora_finetuning_evaluation(keys)
+                    print("Running Few-Shot Adaptation...")
+                    run_fs(keys, args.llm_name)
                 elif task2_choice == '2':
-                    print("Running RAG Pipeline Evaluation...")
+                    print("Running LoRA Adaptation Method...")
                     # run_model_comparison.run_rag_evaluation(keys)
                 elif task2_choice == '3':
+                    print("Running RAG Adaptation Method ...")
+                elif task2_choice == '4':
+                    print("Returning to Main Menu...")
                     break
                 else:
                     print("Invalid choice. Please select a valid method number.")
