@@ -14,7 +14,9 @@ DATA_CONFIG = {
     "DATASET_LANGUAGES": ["ind", "jav", "sun"],
     "TRAIN_SPLIT_SIZE": 0.5,
     "NUM_TRAIN_SAMPLES_PER_CLASS": 8,
-    "NUM_VAL_SAMPLES": 5
+    "NUM_VAL_SAMPLES": 5,
+    "RAG_TOP_K": 5,
+    "EMBEDDING_MODEL": "text-embedding-004"
 }
 
 #2. MODEL CONFIGURATIONS
