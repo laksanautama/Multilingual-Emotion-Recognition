@@ -20,12 +20,12 @@ def classify_text(text, chain):
 def llm_selection(llm_model_name: str, keys: dict):
     """Select and return the appropriate LLM model based on the provided name."""
    
-    if llm_model_name.lower() == 'gemini-2.5':
+    if llm_model_name.lower() == 'gemini-2.5-flash':
         if not os.environ.get("GOOGLE_API_KEY"):
             os.environ["GOOGLE_API_KEY"] = keys.get("GOOGLE_API_KEY") or getpass.getpass("Enter your Google API Key: ")
         llm_gemini = ChatGoogleGenerativeAI(
-            model="gemini-2.5",
-            temperature=0.7,
+            model="gemini-2.5-flash",
+            temperature=0.3,
             max_output_tokens=None,
             timeout=None,
         )
