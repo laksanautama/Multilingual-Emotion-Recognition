@@ -3,6 +3,8 @@ from langchain_community.vectorstores import FAISS
 from langchain_community.docstore.document import Document
 from langchain_google_genai import GoogleGenerativeAIEmbeddings
 from crosslingual_ER.scripts.model_configs import DATA_CONFIG
+from llm_evaluation.llm_code.llm_utility.llm_utility import llm_selection
+from langchain_community.chains import RetrievalQA
 import os
 
 
@@ -21,12 +23,33 @@ def store_vectors_database(train_data, keys: dict):
         documents.append(
             Document(
             page_content=row['sentence'],
-            metadata={"id": row['id']}
+            metadata={"id": row['id'],
+                      "emotions": row['emotions']}
             )
         )
     embeddings = GoogleGenerativeAIEmbeddings(
-        model = "text-embedding-004"
+        model = DATA_CONFIG["EMBEDDING_MODEL"]
         )
     faiss_store = FAISS.from_documents(documents, embeddings)
     faiss_store.save_local(f"{full_path}")
     print(f"Vectors stored successfully to {full_path}.")
+
+def rag_retriever(llm_model_name: str, keys:dict, k: int):
+    MAIN_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(__file__))))
+    full_path = os.path.join(MAIN_DIR, DATA_CONFIG["FAISS_INDEX_DIR"])
+    embeddings = GoogleGenerativeAIEmbeddings(
+        model = DATA_CONFIG["EMBEDDING_MODEL"]
+        )
+    loaded_store = FAISS.load_local(f"{full_path}", 
+                                    embeddings,
+                                    allow_dangerous_deserialization=True
+                                    )
+    
+    retr = loaded_store.as_retriever(search_type="similarity", search_kwargs={"k": k})
+    llm = llm_selection(llm_model_name, keys)
+    rag = RetrievalQA.from_chain_type(
+        llm=llm,
+        retriever=retr,
+        return_source_documents=False
+    )
+    return rag
