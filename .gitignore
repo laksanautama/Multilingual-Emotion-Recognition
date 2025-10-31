@@ -12,6 +12,7 @@ data/*
 *.pt             # PyTorch model files
 *.h5             # Keras/TensorFlow model files
 *.ckpt           # Checkpoint files
+*.json           # JSON files 
 
 # API Keys and Secrets
 .env
