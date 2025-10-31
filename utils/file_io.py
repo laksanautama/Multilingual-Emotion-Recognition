@@ -38,7 +38,7 @@ def create_train_examples(train_dataset, emotion, total_samples: int):
 def create_val_examples(val_dataset, val_samples: int):
     """ Create validation examples from val dataset. """
     num_samples = min(val_samples, len(val_dataset))
-
+    # print(val_dataset)
     def sample_group(group):
         return group.sample(min(len(group), max(1, int(num_samples * len(group) / len(val_dataset)))), random_state=TRAINING_CONFIG["SEED"])
     
@@ -64,4 +64,22 @@ def save_results_to_file(results: dict, filename: str):
     with open(filename_path, 'w') as f:
         json.dump(results, f, indent=4)
     logging.info(f"Results saved to {filename_path}")
+
+def load_json_file(filename: str):
+    """ Load and return the contents of a JSON file. """
+    MAIN_DIR = os.path.dirname(os.path.dirname(__file__))
+    full_path = os.path.join(MAIN_DIR, DIRECTORY_PATH["FEW_SHOT_RESULTS_DIR"])
+    filepath = f"{full_path}/{filename}.json"
+
+    try:
+        with open(filepath, 'r') as f:
+            data = json.load(f)
+            print("Successfully loaded JSON file:")
+            return data
+    except FileNotFoundError:
+        print(f"File not found: {filepath}")
+        return None
+    except json.JSONDecodeError:
+        print(f"Error decoding JSON from file: {filepath}")
+        return None
 
