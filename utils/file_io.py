@@ -83,3 +83,9 @@ def load_json_file(filename: str):
         print(f"Error decoding JSON from file: {filepath}")
         return None
 
+def check_faiss_exists(filename: str) -> bool:
+    MAIN_DIR = os.path.dirname(os.path.dirname(__file__))
+    full_path = os.path.join(MAIN_DIR, DATA_CONFIG["FAISS_INDEX_DIR"])
+    filepath = f"{full_path}/{filename}.faiss"
+    return os.path.exists(filepath)
+
