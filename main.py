@@ -2,6 +2,7 @@ import sys
 from utils import load_environment_variables
 from crosslingual_ER.scripts.run_model_comparion import run
 from llm_evaluation.llm_code.few_shot_adaptation.run_few_shot import run_fs
+from llm_evaluation.llm_code.rag.run_evaluation import run_rag
 import argparse
 # from crosslingual_ER.scripts.run_model_comparion import run_model_comparison 
 
@@ -55,6 +56,7 @@ def main():
                     # run_model_comparison.run_rag_evaluation(keys)
                 elif task2_choice == '3':
                     print("Running RAG Adaptation Method ...")
+                    run_rag(keys, args.llm_name)
                 elif task2_choice == '4':
                     print("Returning to Main Menu...")
                     break
