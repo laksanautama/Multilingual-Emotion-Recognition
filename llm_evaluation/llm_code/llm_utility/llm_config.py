@@ -18,10 +18,29 @@ PROMPT_CONFIG = {
 
     "IND_PREFFIX" : """ Analisis teks berikut apakah termasuk ungkapan {emotion}. Jelaskan alasan Anda secara singkat dan disertai dengan 'Jawaban:' 'ya' atau 'tidak'.
                     Berikut ini adalah beberapa contoh:
+                    """,
+
+    "CLF_TEMPLATE"  : """
+                    You are a emotion classification assistant.
+                    Your task is to assign labels to the query based ONLY on the context provided.
+
+                    Context:
+                    {context}
+
+                    Query:
+                    {query}
+
+                    Labels:
+                    {labels}
+
+                    Instruction:
+                    Choose most appropriate labels from the list above.
+                    You can choose more than one label. You don't need to explain your answer, just conclude with 'Answer: ' followed which labels from the list above that suited for this query.
                     """
 
 }
 
 DIRECTORY_PATH = {
-    "FEW_SHOT_RESULTS_DIR": "results/"
+    "FEW_SHOT_RESULTS_DIR": "results/",
+    "RAG_RESULTS_DIR": "results/rag/"
 }
