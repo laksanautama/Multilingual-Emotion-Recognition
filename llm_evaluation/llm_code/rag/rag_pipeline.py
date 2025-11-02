@@ -58,7 +58,7 @@ def rag_retriever(llm_model_name: str, keys:dict, k: int):
 def docs_retrieval_processing(docs):
   doc_list = []
   for doc in docs:
-    str_emotion = doc.metadata['emotion'].strip("[]'").replace("'", "")
+    str_emotion = doc.metadata['emotions'].strip("[]'").replace("'", "")
     emotion = 'no emotion' if str_emotion == '' else str_emotion
     text = f" This text is contain emotion: {emotion}"
     complete_text = doc.page_content + text
