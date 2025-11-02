@@ -53,22 +53,32 @@ def llm_dataset_preparation(filename: str, split_size: float):
     
     return train_data.reset_index(drop=True), val_data.reset_index(drop=True)
 
-def save_results_to_file(results: dict, filename: str):
+def save_results_to_file(results: dict, filename: str, task: str):
     logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
     """ Save results dictionary to a text file. """
+    if task == "few_shot":
+        dir = DIRECTORY_PATH["FEW_SHOT_RESULTS_DIR"]
+    elif task == "rag":
+        dir = DIRECTORY_PATH["RAG_RESULTS_DIR"]
+
     MAIN_DIR = os.path.dirname(os.path.dirname(__file__))
-    full_path = os.path.join(MAIN_DIR, DIRECTORY_PATH["FEW_SHOT_RESULTS_DIR"])
+    full_path = os.path.join(MAIN_DIR, dir)
     filename_path = f"{full_path}/{filename}.json"
     os.makedirs(full_path, exist_ok=True)
     with open(filename_path, 'w') as f:
         json.dump(results, f, indent=4)
-    logging.info(f"Results saved to {filename_path}")
+    logging.info(f"Results {task} saved to {filename_path}")
 
-def load_json_file(filename: str):
+def load_json_file(filename: str, task: str):
     """ Load and return the contents of a JSON file. """
     MAIN_DIR = os.path.dirname(os.path.dirname(__file__))
-    full_path = os.path.join(MAIN_DIR, DIRECTORY_PATH["FEW_SHOT_RESULTS_DIR"])
+    if task == "few_shot":
+        dir = DIRECTORY_PATH["FEW_SHOT_RESULTS_DIR"]
+    elif task == "rag":
+        dir = DIRECTORY_PATH["RAG_RESULTS_DIR"]
+
+    full_path = os.path.join(MAIN_DIR, dir)
     filepath = f"{full_path}/{filename}.json"
 
     try:
