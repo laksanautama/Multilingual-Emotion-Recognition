@@ -41,6 +41,7 @@ PROMPT_CONFIG = {
 }
 
 DIRECTORY_PATH = {
-    "FEW_SHOT_RESULTS_DIR": "results/",
-    "RAG_RESULTS_DIR": "results/rag/"
+    "FEW_SHOT_RESULTS_DIR": "results/fs",
+    "RAG_RESULTS_DIR": "results/rag",
+    "LORA_RESULTS_DIR": "results/lora"
 }
