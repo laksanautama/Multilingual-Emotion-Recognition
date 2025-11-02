@@ -59,5 +59,5 @@ def run_fs(keys: dict, llm_model_name: str):
                                     }
 
     results_filename = "few_shot_results"
-    save_results_to_file(emotion_results, results_filename)
+    save_results_to_file(emotion_results, results_filename, 'few_shot')
     
