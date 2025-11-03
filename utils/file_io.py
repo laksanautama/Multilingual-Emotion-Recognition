@@ -2,13 +2,16 @@ from crosslingual_ER.scripts.data_loader import load_target_test_data
 from sklearn.model_selection import train_test_split
 from crosslingual_ER.scripts.model_configs import TRAINING_CONFIG, DATA_CONFIG
 from llm_evaluation.llm_code.llm_utility.llm_config import DIRECTORY_PATH
+from llm_evaluation.llm_code.llm_utility.llm_utility import translate_label, translate_answer, select_language_config
 import pandas as pd
 import math
 import json
 import os
 import logging
 
-def create_train_examples(train_dataset, emotion, total_samples: int):
+def create_train_examples(train_dataset, emotion, total_samples: int, prompt_language: str):
+    
+    
     """ create num_examples * 2 of samples from train dataset"""
     try:
         if total_samples > len(train_dataset):
@@ -24,11 +27,13 @@ def create_train_examples(train_dataset, emotion, total_samples: int):
         samples_1 = train_dataset[train_dataset[emotion] == 1].sample(n_samples_1, random_state=TRAINING_CONFIG["SEED"])
         samples_0 = train_dataset[train_dataset[emotion] == 0].sample(n_samples_0, random_state=TRAINING_CONFIG["SEED"])
         samples_full = pd.concat([samples_1, samples_0])
-
+        _, _, _, _, input_key, answer_key = select_language_config(prompt_language)
+        
         for i in range(len(samples_full)):
-            answer = 'yes' if samples_full[emotion].iloc[i] == 1 else 'no'
-            example.append({'input': samples_full['sentence'].iloc[i], 'answer': answer})
-    
+            en_answer = 'yes' if samples_full[emotion].iloc[i] == 1 else 'no'
+            answer = translate_answer(en_answer, prompt_language)
+            example.append({input_key: samples_full['sentence'].iloc[i], answer_key: answer})
+
         return example
     
     except ValueError as e:
@@ -53,7 +58,7 @@ def llm_dataset_preparation(filename: str, split_size: float):
     
     return train_data.reset_index(drop=True), val_data.reset_index(drop=True)
 
-def save_results_to_file(results: dict, filename: str, task: str):
+def save_results_to_file(results: dict, filename: str, task: str, prompt_language: str):
     logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
     """ Save results dictionary to a text file. """
@@ -63,14 +68,43 @@ def save_results_to_file(results: dict, filename: str, task: str):
         dir = DIRECTORY_PATH["RAG_RESULTS_DIR"]
 
     MAIN_DIR = os.path.dirname(os.path.dirname(__file__))
-    full_path = os.path.join(MAIN_DIR, dir)
+    full_path = os.path.join(MAIN_DIR, dir, prompt_language)
     filename_path = f"{full_path}/{filename}.json"
     os.makedirs(full_path, exist_ok=True)
     with open(filename_path, 'w') as f:
         json.dump(results, f, indent=4)
     logging.info(f"Results {task} saved to {filename_path}")
 
-def load_json_file(filename: str, task: str):
+def save_analysis_results(results: dict, filename: str, task: str, prompt_language: str):
+    """ Save results dictionary to a text file. """
+    if task == "few_shot":
+        dir = DIRECTORY_PATH["FEW_SHOT_RESULTS_DIR"]
+    elif task == "rag":
+        dir = DIRECTORY_PATH["RAG_RESULTS_DIR"]
+
+    MAIN_DIR = os.path.dirname(os.path.dirname(__file__))
+    full_path = os.path.join(MAIN_DIR, dir, prompt_language)
+    filename_path = f"{full_path}/{filename}.json"
+
+    if os.path.exists(filename_path) and os.path.getsize(filename_path) > 0:
+        with open(filename_path, 'r') as f:
+            try:
+                existing_data = json.load(f)
+            except json.JSONDecodeError:
+                print(f"Warning: JSON file at {filename_path} is corrupted or empty. Starting new dictionary.")
+                existing_data = {}
+    else:
+        existing_data = {}
+    
+    existing_data.update(results)
+
+    with open(filename_path, 'w') as f:
+        json.dump(existing_data, f, indent=4)
+        
+    print(f"Data successfully appended and saved to {filename_path}")
+    
+
+def load_json_file(filename: str, task: str, prompt_language: str = None):
     """ Load and return the contents of a JSON file. """
     MAIN_DIR = os.path.dirname(os.path.dirname(__file__))
     if task == "few_shot":
@@ -78,7 +112,7 @@ def load_json_file(filename: str, task: str):
     elif task == "rag":
         dir = DIRECTORY_PATH["RAG_RESULTS_DIR"]
 
-    full_path = os.path.join(MAIN_DIR, dir)
+    full_path = os.path.join(MAIN_DIR, dir, prompt_language)
     filepath = f"{full_path}/{filename}.json"
 
     try:
@@ -98,4 +132,15 @@ def check_faiss_exists(filename: str) -> bool:
     full_path = os.path.join(MAIN_DIR, DATA_CONFIG["FAISS_INDEX_DIR"])
     filepath = f"{full_path}/{filename}.faiss"
     return os.path.exists(filepath)
+
+def get_folder_name(dir_path: str):
+    MAIN_DIR = os.path.dirname(os.path.dirname(__file__))
+    full_path = os.path.join(MAIN_DIR, dir_path)
+    folder_name = []
+    all_entries = os.listdir(full_path)
+    for entry in all_entries:
+        entry_path = os.path.join(full_path, entry)
+        if os.path.isdir(entry_path):
+            folder_name.append(entry)
+    return folder_name
 
