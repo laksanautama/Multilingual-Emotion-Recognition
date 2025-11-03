@@ -57,7 +57,7 @@ PROMPT_CONFIG = {
 
                     Instruction:
                     Choose most appropriate labels from the list above.
-                    You can choose more than one label. You don't need to explain your answer, just conclude with 'Answer: ' followed which labels from the list above that suited for this query.
+                    You can choose more than one label. Conclude your decision with 'Answer: ' followed which labels from the list above that suited for this query, and put the reason of your choice after 'Reason: '.
                     """,
 
     "IND_CLF_TEMPLATE"  : """
@@ -75,7 +75,7 @@ PROMPT_CONFIG = {
 
                     Instruksi:
                     Pilih label yang paling sesuai dari daftar di atas.
-                    Anda dapat memilih lebih dari satu label. Anda tidak perlu menjelaskan jawaban Anda, cukup akhiri dengan 'Answer: ' diikuti dengan label dari daftar di atas yang sesuai untuk pertanyaan ini.
+                    Anda dapat memilih lebih dari satu label. Putuskanlah jawaban anda dengan kata 'Jawaban: ' diikuti dengan label dari daftar di atas yang sesuai untuk pertanyaan ini, dan tuliskan penjelaskan atas pilihan anda tersebut setelah kata 'Alasan: '
                     """,
 
     "BAL_CLF_TEMPLATE" : """
@@ -90,8 +90,8 @@ PROMPT_CONFIG = {
                     Label:
                     {labels}
 
-                    Instruction:
-                    Pilih label sané pinih patut saking daftar ring ajeng. Ragane dados milih langkungan saking asiki label. Ragane tusing perlu nlatarang pasaut ragane; cukup puputang antuk 'Pasaut: ' kalanturang antuk label saking daftar ring ajeng sane manggeh ring pitaken puniki.
+                    Patunjuk:
+                    Pilih label sané pinih patut saking daftar ring ajeng. Ragane dados milih langkungan saking asiki label. Tentuang pasaut ragane antuk kruna 'Pasaut:' kalanturang antuk label saking daftar ring ajeng sane manggeh ring pitaken puniki, tur tulis penjelasan indik pilihan semetone sesampun kruna 'Alasan:'
                     """
 
 }
