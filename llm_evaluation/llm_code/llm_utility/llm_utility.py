@@ -19,7 +19,8 @@ def select_language_config(prompt_language: str):
                     'clf_template': PROMPT_CONFIG["IND_CLF_TEMPLATE"],
                     'label_column' : DATA_CONFIG["IND_LABELS"],
                     'input' : "teks_masukan",
-                    'answer' : "jawaban"
+                    'answer' : "jawaban",
+                    'reason' : "alasan"
 
                     }
         
@@ -32,7 +33,8 @@ def select_language_config(prompt_language: str):
                     'clf_template' : PROMPT_CONFIG["BAL_CLF_TEMPLATE"],
                     'label_column' : DATA_CONFIG["BAL_LABELS"],
                     'input' : "masukan",
-                    'answer' : "pasaut"
+                    'answer' : "pasaut",
+                    'reason' : "alasan"
 
                     }
 
@@ -46,6 +48,7 @@ def select_language_config(prompt_language: str):
                     'label_column' : DATA_CONFIG["LABELS"],
                     'input' : "input",
                     'answer' : "answer",
+                    'reason' : "reason"
 
                     }
 
@@ -170,3 +173,18 @@ def llm_selection(llm_model_name: str, keys: dict):
  
     else:
         raise ValueError(f"Unsupported LLM model name: {llm_model_name}")
+    
+def strip_result_content(content, conf_answer, conf_reason):
+    temp_content = content.split(f"{conf_answer}: ")[1]
+    parts = temp_content.split(f"\n{conf_reason}:")
+
+    if len(parts) < 2:
+
+        answer = parts[0].strip()
+        reason = "no reason" 
+    else:
+        answer = parts[0].strip() 
+        reason = parts[1].strip()
+
+
+    return answer, reason
