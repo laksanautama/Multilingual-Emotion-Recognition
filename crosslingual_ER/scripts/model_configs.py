@@ -7,6 +7,8 @@ DATA_CONFIG = {
     "FAISS_INDEX_DIR": "data/faiss_index",
     "CACHE_DIR": "data/hf_download_cache",
     "LABELS": ["anger", "disgust", "fear", "joy", "sadness", "surprise"],
+    "IND_LABELS": ["marah", "jijik", "takut", "senang", "sedih", "terkejut"],
+    "BAL_LABELS": ["gedeg", "seneb", "takut", "sukha", "sedih", "makesiab"],
     "TRAIN_TEXT_COLUMN": "text",
     "TEST_TEXT_COLUMN": "sentence",
     "NUM_LABELS": 6,
