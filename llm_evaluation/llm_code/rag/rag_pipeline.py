@@ -3,7 +3,7 @@ from langchain_community.vectorstores import FAISS
 from langchain_community.docstore.document import Document
 from langchain_google_genai import GoogleGenerativeAIEmbeddings
 from crosslingual_ER.scripts.model_configs import DATA_CONFIG
-from llm_evaluation.llm_code.llm_utility.llm_utility import llm_selection
+from llm_evaluation.llm_code.llm_utility.llm_utility import llm_selection, translate_label, translate_emotion_text
 import os
 from langchain_classic.chains import RetrievalQA
 
@@ -55,22 +55,33 @@ def rag_retriever(llm_model_name: str, keys:dict, k: int):
     # )
     return retriever
 
-def docs_retrieval_processing(docs):
+def docs_retrieval_processing(docs, lang):
   doc_list = []
   for doc in docs:
     str_emotion = doc.metadata['emotions'].strip("[]'").replace("'", "")
-    emotion = 'no emotion' if str_emotion == '' else str_emotion
-    text = f" This text is contain emotion: {emotion}"
+    en_emotion = 'no emotion' if str_emotion == '' else str_emotion
+    emotion = translate_label(en_emotion, lang)
+    translated_text = translate_emotion_text(lang)
+    text = f"{translated_text}{emotion}"
     complete_text = doc.page_content + text
     doc_list.append(complete_text)
   context = "\n\n".join([x for x in doc_list])
   return context
 
-def rag_classifier(query, retriever, chain, labels):
+def rag_classifier(query, retriever, chain, labels, lang):
+  """
+    -- you need to convert from label in eng to ind or bal
+    -- you also need to translate 'This text is contain emotion'
+  """
   docs = retriever.invoke(query)
-  context = docs_retrieval_processing(docs)
+  context = docs_retrieval_processing(docs, lang)
   labels.append('no emotion') #adding 'no emotion' label
-  labels_text = ", ".join(labels)
+  translated_label = []
+  for lab in labels:
+     tr_label = translate_label(lab, lang)
+     translated_label.append(tr_label)
+
+  labels_text = ", ".join(translated_label)
 
   input_dict = {
         "context": context,
