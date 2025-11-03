@@ -1,6 +1,7 @@
 import argparse
-from utils import load_json_file
+from utils import load_json_file, get_folder_name
 from crosslingual_ER.scripts.model_configs import DATA_CONFIG
+from llm_evaluation.llm_code.llm_utility.llm_config import DIRECTORY_PATH
 from sklearn.preprocessing import MultiLabelBinarizer
 from sklearn.metrics import (
     f1_score, accuracy_score, hamming_loss, jaccard_score
@@ -10,14 +11,19 @@ from sklearn.metrics import (
 def evaluate_fs():
     """Function to evaluate few-shot adaptation results."""
     print("Evaluating Few-Shot Adaptation Results...")
+    dir_path = DIRECTORY_PATH["FEW_SHOT_RESULTS_DIR"]
+    prompt_lang = get_folder_name(dir_path)
+    
+    for lang in prompt_lang:
+        print(f"\n--- Evaluating for Prompt Language: {lang} ---")
 
-    emotion_results = load_json_file("few_shot_results", 'few_shot')
-    sumscore = 0
-    for emotion, results in emotion_results.items():
-        f1 = f1_score(results["ground_truths"], results["predictions"], average='macro')
-        print(f"F1 Score for {emotion}: {f1}")
-        sumscore += f1
-    print(f"Average F1 Score across all emotions: {sumscore / DATA_CONFIG['NUM_LABELS']}")
+        emotion_results = load_json_file("few_shot_results", 'few_shot', lang)
+        sumscore = 0
+        for emotion, results in emotion_results.items():
+            f1 = f1_score(results["ground_truths"], results["predictions"], average='macro')
+            print(f"F1 Score for {emotion}: {f1}")
+            sumscore += f1
+        print(f"Average F1 Score across all emotions: {sumscore / DATA_CONFIG['NUM_LABELS']} in language: {lang}")
 
 
 def evaluate_rag():
@@ -41,6 +47,7 @@ def evaluate_rag():
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--task', type=str, required=True, choices=['evaluate_fs', 'evaluate_lora', 'evaluate_rag'], help='Task to perform')
+    # parser.add_argument('--prompt_language', type=str, default='english', help='Language for the prompt (english/indonesian/balinese)')
     args = parser.parse_args()
 
     if args.task == 'evaluate_fs':
