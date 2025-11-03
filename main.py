@@ -33,6 +33,7 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--lm_name', type=str, default='indolem/indobert-base-uncased')
     parser.add_argument('--llm_name', type=str, default='gemini-2.5-flash')
+    parser.add_argument('--prompt_language', type=str, default='english', help='Language for the prompt (english/indonesian/balinese)')
     # parser.add_argument('--adaptation_method', type=str, default='few-shot')
     args = parser.parse_args()
 
@@ -50,13 +51,13 @@ def main():
                 task2_choice = task_2_selection()
                 if task2_choice == '1':
                     print("Running Few-Shot Adaptation...")
-                    run_fs(keys, args.llm_name)
+                    run_fs(keys, args.llm_name, args.prompt_language)
                 elif task2_choice == '2':
                     print("Running LoRA Adaptation Method...")
                     # run_model_comparison.run_rag_evaluation(keys)
                 elif task2_choice == '3':
                     print("Running RAG Adaptation Method ...")
-                    run_rag(keys, args.llm_name)
+                    run_rag(keys, args.llm_name, args.prompt_language)
                 elif task2_choice == '4':
                     print("Returning to Main Menu...")
                     break
