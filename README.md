@@ -53,7 +53,8 @@ The main arguments are:
 | --llm    | Large language model used for generation/analysis | 'gemini-2.5-flash'|
 | --adaptation_method | Method for fine-tuned the LLM | 'few_shot'|
 
-- [ ] Basic Command
+✅ ## Basic Command
+<pre>python main.py</pre>
 
  
 
