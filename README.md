@@ -9,7 +9,7 @@ We propose 2 methods for this task:
 - LLM-based Emotion Recognition: We used several adaptation methods: Few-shot, RAG, and Lora.
 
 ## Dataset
-Our Balinese-text emotion dataset was created by extracting text from Balinese stories and then manually labeling the emotions. For the related family languages (Indonesian, Javanese, and Sundanese), the emotion data was sourced from the publicly available Brighter Dataset [Link text](https://arxiv.org/abs/2502.11926)
+Our Balinese-text emotion dataset was created by extracting text from Balinese stories and then manually labeling the emotions. For the related family languages (Indonesian, Javanese, and Sundanese), the emotion data was sourced from the publicly available Brighter Dataset [see paper](https://arxiv.org/abs/2502.11926)
 
 ## Features
 - The language models that have been tested so far:
