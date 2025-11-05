@@ -29,8 +29,7 @@ Our Balinese-text emotion dataset was created by extracting text from Balinese s
 <pre>pip install -r requirements.txt</pre>
 For LLM inference (Gemini, etc.) and also for loading Brighter Dataset from Huggingface hub, set your API keys accordingly.
 This project uses several external APIs for model loading and LLM inference.
-Create a .env file in the project root to store your keys securely.
-add your API keys to .env file:
+Create a .env file in the project root to store your keys securely, and add your API keys to .env file:
 <pre>
   # Required: HuggingFace access token
 HUGGINGFACE_TOKEN=your_hf_token_here
@@ -41,9 +40,16 @@ GOOGLE_API_KEY=your_google_api_key_here
 # Optional: Groq API (for Qwen/Qwen3 or Mixtral models)
 GROQ_API_KEY=your_groq_api_key_here
 
-# Optional: DeepSeek API (for DeepSeek-R1 or DeepSeek-V3)
+# Optional: DeepSeek API (for DeepSeek-V3)
 DEEPSEEK_API_KEY=your_deepseek_api_key_here
 </pre>
+
+## How to Run the Project
+All experiments are executed using the main.py file.
+The main arguments are:
+| Arguments | Description | Default |
+|-----------|-------------|---------|
+| --llm     |Preferred language model for embedding/classification | indolem/indobert-base-uncased |
 
  
 
