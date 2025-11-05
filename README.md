@@ -49,7 +49,9 @@ All experiments are executed using the main.py file.
 The main arguments are:
 | Arguments | Description | Default |
 |-----------|-------------|---------|
-| --llm     |Preferred language model for embedding/classification | indolem/indobert-base-uncased |
+| --lm     | Preferred language model for embedding/classification | 'indolem/indobert-base-uncased' |
+| --llm    | Large language model used for generation/analysis | 'gemini-2.5-flash'|
+| --adaptation_method | Method for fine-tuned the LLM | 'few_shot'|
 
  
 
