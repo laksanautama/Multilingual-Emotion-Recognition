@@ -60,6 +60,13 @@ This will run the experiment using all default settings:
 - LLM: `gemini-2.5-flash`
 - Adaptation: `few_shot`
 
+### ✅ Example using other LM, LLM, and Adaptation Method
+<pre>python main.py --lm "sentence-transformers/LaBSE" --llm "qwen/qwen3-32b" --adaptation_method "rag"</pre>
+This will run the experiment using:
+- LM : `LaBSE'
+- LLM : `qwen/qwen3-32b`
+- Adaptation : `rag`
+
  
 
 
