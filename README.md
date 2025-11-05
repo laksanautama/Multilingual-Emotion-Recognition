@@ -45,7 +45,7 @@ DEEPSEEK_API_KEY=your_deepseek_api_key_here
 </pre>
 
 ## How to Run the Project
-All experiments are executed using the 'main.py' file.
+All experiments are executed using the <pre>main.py</pre> file.
 The main arguments are:
 | Arguments | Description | Default |
 |-----------|-------------|---------|
