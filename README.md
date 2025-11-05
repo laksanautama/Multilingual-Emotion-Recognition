@@ -5,8 +5,8 @@ The main goal is to explore how modern representation and generative models perf
 
 ## Task
 We propose 2 methods for this task: 
-- Crosslingual Emotion Recognition: Train languages that belong to the same family with Balinese such as Indonesian (ind), Javanese (jav), and Sundanese (sun).
-- LLM-based Emotion Recognition: We use several adaptation methods: Few-shot, RAG, and Lora.
+- Crosslingual Emotion Recognition: We trained languages that belong to the same family with Balinese such as Indonesian (ind), Javanese (jav), and Sundanese (sun).
+- LLM-based Emotion Recognition: We used several adaptation methods: Few-shot, RAG, and Lora.
 
 ## Dataset
 Our Balinese-text emotion dataset was created by extracting text from Balinese stories and then manually labeling the emotions. For the related family languages (Indonesian, Javanese, and Sundanese), the emotion data was sourced from the publicly available Brighter Dataset (https://arxiv.org/abs/2502.11926) 
