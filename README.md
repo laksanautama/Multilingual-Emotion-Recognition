@@ -6,7 +6,7 @@ The main goal is to explore how modern representation and generative models perf
 ## Task
 We propose 2 methods for this task: 
 - Crosslingual Emotion Recognition: We trained languages that belong to the same family with Balinese such as Indonesian (ind), Javanese (jav), and Sundanese (sun).
-- LLM-based Emotion Recognition: We used several adaptation methods: Few-shot, RAG, and Lora.
+- LLM-based Emotion Recognition: We used several adaptation methods: `Few-shot`, `RAG`, and `Lora`.
 
 ## Dataset
 Our Balinese-text emotion dataset was created by extracting text from Balinese storiette and then manually labeling the emotions. For the related family languages (Indonesian, Javanese, and Sundanese), the emotion data was sourced from the publicly available Brighter Dataset [see paper](https://arxiv.org/abs/2502.11926)
@@ -29,7 +29,7 @@ Our Balinese-text emotion dataset was created by extracting text from Balinese s
 <pre>pip install -r requirements.txt</pre>
 For LLM inference (Gemini, etc.) and also for loading Brighter Dataset from Huggingface hub, set your API keys accordingly.
 This project uses several external APIs for model loading and LLM inference.
-Create a .env file in the project root to store your keys securely, and add your API keys to .env file:
+Create a `.env` file in the project root to store your keys securely, and add your API keys to `.env` file:
 <pre>
   # Required: HuggingFace access token
 HUGGINGFACE_TOKEN=your_hf_token_here
@@ -45,16 +45,20 @@ DEEPSEEK_API_KEY=your_deepseek_api_key_here
 </pre>
 
 ## How to Run the Project
-All experiments are executed using the main.py file.
+All experiments are executed using the `main.py` file.
 The main arguments are:
 | Arguments | Description | Default |
 |-----------|-------------|---------|
-| --lm     | Preferred language model for embedding/classification | 'indolem/indobert-base-uncased' |
-| --llm    | Large language model used for generation/analysis | 'gemini-2.5-flash'|
-| --adaptation_method | Method for fine-tuned the LLM | 'few_shot'|
+| --lm     | Preferred language model for embedding/classification | `'indolem/indobert-base-uncased'` |
+| --llm    | Large language model used for generation/analysis | `'gemini-2.5-flash'`|
+| --adaptation_method | Method for fine-tuned the LLM | `'few_shot'`|
 
-✅ ## Basic Command
+### ✅ Basic Command
 <pre>python main.py</pre>
+This will run the experiment using all default settings:
+- LM: `indolem/indobert-base-uncased`
+- LLM: `gemini-2.5-flash`
+- Adaptation: `few_shot`
 
  
 
