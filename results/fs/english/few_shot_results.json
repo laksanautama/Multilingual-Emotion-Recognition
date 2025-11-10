@@ -1,10 +1,10 @@
 {
     "anger": {
         "predictions": [
-            "no",
-            "no",
             "yes",
             "no",
+            "yes",
+            "yes",
             "yes"
         ],
         "ground_truths": [
@@ -21,7 +21,7 @@
             "no",
             "yes",
             "no",
-            "no"
+            "yes"
         ],
         "ground_truths": [
             "yes",
@@ -82,7 +82,7 @@
     "surprise": {
         "predictions": [
             "no",
-            "yes",
+            "no",
             "yes",
             "no",
             "no"

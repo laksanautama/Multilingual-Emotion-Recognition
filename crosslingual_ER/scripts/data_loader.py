@@ -1,6 +1,6 @@
 import os
 import pandas as pd
-from .model_configs import DATA_CONFIG
+from .model_configs import DATA_CONFIG, TRAINING_CONFIG
 from datasets import load_dataset, Dataset, concatenate_datasets
 from huggingface_hub import login
 import numpy as np
@@ -81,8 +81,9 @@ def load_target_test_data(filename: str, cross_lingual: bool = False):
 
             if '__index_level_0__' in target_dataset.column_names:
                 target_dataset = target_dataset.remove_columns(["__index_level_0__"])
-                mhe_dataset = target_dataset.map(get_label_binarizer)
-                return mhe_dataset
+            mhe_dataset = target_dataset.map(get_label_binarizer)
+            val_data, test_data = mhe_dataset.train_test_split(test_size=0.5, seed=TRAINING_CONFIG["SEED"])
+            return val_data, test_data
         else:
             return test_df
     except Exception as e:
@@ -98,7 +99,7 @@ def load_huggingface_dataset(dataset_name: str, dataset_lang: list, split: str, 
         login(token=hf_token, add_to_git_credential=False)
     else:
         print("Warning: Hugging Face Token not provided. Will only be able to access public models/datasets.")
-    
+    print(f"dataset name: {dataset_name}")
     loaded_datasets = []
     for lang in dataset_lang:
         loaded = False
@@ -127,7 +128,7 @@ def load_huggingface_dataset(dataset_name: str, dataset_lang: list, split: str, 
         mhe_dataset = combined_dataset.map(get_label_binarizer)
         pos_weights_label = pos_weight(mhe_dataset['labels'])
         print(f"Combined dataset contains {len(combined_dataset)} samples from languages: {', '.join(dataset_lang)} with split: {split}")
-        SPLIT_CACHE_DIR = os.path.join(CACHE_DIR, split)
-        mhe_dataset.save_to_disk(SPLIT_CACHE_DIR)
-        print(f"Combined {split} dataset saved to cache directory: {SPLIT_CACHE_DIR}")
+        # SPLIT_CACHE_DIR = os.path.join(CACHE_DIR, split)
+        # mhe_dataset.save_to_disk(SPLIT_CACHE_DIR)
+        # print(f"Combined {split} dataset saved to cache directory: {SPLIT_CACHE_DIR}")
         return mhe_dataset, pos_weights_label

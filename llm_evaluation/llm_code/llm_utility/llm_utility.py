@@ -96,17 +96,23 @@ def classify_text(text, chain, prompt_language: str):
 def translate_label(label: str, prompt_language: str):
     word = label.lower()
     lang = prompt_language.lower()
+    label_list = word.split(", ")
+    lb_str = []
+    for label in label_list:
 
-    if lang == 'english':
-        return word
-    
-    if word in TRANSLATION_MAP:
-        if lang in TRANSLATION_MAP[word]:
-            return TRANSLATION_MAP[word][lang]
+        if lang == 'english':
+            lb_str.append(label)
+        
+        if label in TRANSLATION_MAP:
+            if lang in TRANSLATION_MAP[label]:
+                lb_str.append(TRANSLATION_MAP[label][lang])
+                # return TRANSLATION_MAP[label][lang]
+            else:
+                return f"Error: Translation for '{label}' to '{lang}' not found."
         else:
-            return f"Error: Translation for '{word}' to '{lang}' not found."
-    else:
-        return f"Error: English word '{word}' not found in map."
+            return f"Error: English word '{label}' not found in map."
+    
+    return ", ".join(lb_str)
 
 def translate_emotion_text(prompt_language: str):
     lang = prompt_language.lower()

@@ -26,12 +26,12 @@ def task_2_selection():
     print("4: Go back to Main Menu")
 
     
-    choice = input("Select a method number (1, 2, or 3): ")
+    choice = input("Select a method number (1, 2, 3, or 4): ")
     return choice
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--lm_name', type=str, default='indolem/indobert-base-uncased')
+    parser.add_argument('--lm_name', type=str, default='indobert')
     parser.add_argument('--llm_name', type=str, default='gemini-2.5-flash')
     parser.add_argument('--prompt_language', type=str, default='english', help='Language for the prompt (english/indonesian/balinese)')
     # parser.add_argument('--adaptation_method', type=str, default='few-shot')
@@ -45,7 +45,7 @@ def main():
         
         if choice == '1':
             print("Running Crosslingual Emotion Recognition...")
-            run(keys)
+            run(keys, args.lm_name)
         elif choice == '2':
             while True:
                 task2_choice = task_2_selection()

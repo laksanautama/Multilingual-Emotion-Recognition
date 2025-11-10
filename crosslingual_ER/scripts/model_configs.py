@@ -24,10 +24,11 @@ DATA_CONFIG = {
 #2. MODEL CONFIGURATIONS
 # ------------------------------------------
 MODEL_PATHS = {
-    "M-BERT": "bert-base-multilingual-cased",
-    "LaBSE": "sentence-transformers/LaBSE",    
-    "IndoBERT": "indolem/indobert-base-uncased",
-    "RemBERT": "google/rembert"
+    "mbert": "bert-base-multilingual-cased",
+    "labse": "sentence-transformers/LaBSE",    
+    "indobert": "indolem/indobert-base-uncased",
+    "rembert": "google/rembert",
+    "meta_llama": "meta-llama/Llama-3.1-8B-Instruct"
 }
 
 #3. TRAINING CONFIGURATIONS
@@ -41,4 +42,22 @@ TRAINING_CONFIG = {
     "WARMUP_STEPS": 0,
     "SEED": 42
 
+}
+
+#4. SAVED MODEL DIRECTORIES
+# ------------------------------------------
+MODEL_SAVE = {
+    "indobert": "models/model_save/indobert",
+    "labse": "models/model_save/labse",
+    "mbert": "models/model_save/mbert",
+    "rembert": "models/model_save/rembert"
+}
+
+#5. MODEL CHECKPOINTS
+# ------------------------------------------
+MODEL_CHECKPOINTS = {
+    "indobert": "models/indobert_checkpoint",
+    "labse": "models/labse_checkpoint",
+    "mbert": "models/lmbert_checkpoint",
+    "rembert": "models/rembert_checkpoint"
 }

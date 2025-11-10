@@ -1,6 +1,6 @@
 from crosslingual_ER.scripts.data_loader import load_target_test_data
 from sklearn.model_selection import train_test_split
-from crosslingual_ER.scripts.model_configs import TRAINING_CONFIG, DATA_CONFIG
+from crosslingual_ER.scripts.model_configs import TRAINING_CONFIG, DATA_CONFIG, MODEL_SAVE, MODEL_CHECKPOINTS
 from llm_evaluation.llm_code.llm_utility.llm_config import DIRECTORY_PATH
 from llm_evaluation.llm_code.llm_utility.llm_utility import translate_label, translate_answer, select_language_config
 import pandas as pd
@@ -55,8 +55,19 @@ def llm_dataset_preparation(filename: str, split_size: float):
     dataset = load_target_test_data(filename, cross_lingual=False)
     # dataset will be split into training and validation sets based on split_size
     train_data, val_data = train_test_split(dataset, test_size=split_size, random_state=TRAINING_CONFIG["SEED"])
-    
+        
     return train_data.reset_index(drop=True), val_data.reset_index(drop=True)
+
+def save_lmmodel(model, tokenizer, model_name: str):
+    """ Save the fine-tuned LM model and tokenizer. """
+    path = MODEL_SAVE[model_name]
+    
+    MAIN_DIR = os.path.dirname(os.path.dirname(__file__))
+    full_path = os.path.join(MAIN_DIR, 'crossligual_ER', path)
+    os.makedirs(full_path, exist_ok=True)
+    model.save_pretrained(full_path)
+    tokenizer.save_pretrained(full_path)
+    print(f"Model and tokenizer saved to {full_path}")
 
 def save_results_to_file(results: dict, filename: str, task: str, prompt_language: str):
     logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
@@ -132,6 +143,23 @@ def check_faiss_exists(filename: str) -> bool:
     full_path = os.path.join(MAIN_DIR, DATA_CONFIG["FAISS_INDEX_DIR"])
     filepath = f"{full_path}/{filename}.faiss"
     return os.path.exists(filepath)
+
+
+def check_lmmodel_exists(model_name: str) -> bool:
+    
+    path = MODEL_SAVE[model_name]
+    
+    MAIN_DIR = os.path.dirname(os.path.dirname(__file__))
+    full_path = os.path.join(MAIN_DIR, path)
+    model_path = f"{full_path}"
+    return os.path.exists(f"{model_path}/tokenizer.json") and os.path.exists(f"{model_path}/model.safetensors")
+
+def check_tokenizer_and_model_exists(saved_model: str, tokenizer: str) -> bool:
+    MAIN_DIR = os.path.dirname(os.path.dirname(__file__))
+    full_path = os.path.join(MAIN_DIR, DIRECTORY_PATH["LORA_CHECKPOINTS_DIR"])
+    model_path = f"{full_path}/{saved_model}.safetensors"
+    tokenizer_path = f"{full_path}/{tokenizer}.json"
+    return os.path.exists(model_path) and os.path.exists(tokenizer_path)
 
 def get_folder_name(dir_path: str):
     MAIN_DIR = os.path.dirname(os.path.dirname(__file__))

@@ -7,6 +7,7 @@ annotated-types @ file:///private/var/folders/nz/j6p8yfhx1mv_0grj5xl4650h0000gp/
 anyio==4.11.0
 archspec @ file:///croot/archspec_1709217642129/work
 attrs==25.4.0
+bitsandbytes==0.42.0
 boltons @ file:///private/var/folders/nz/j6p8yfhx1mv_0grj5xl4650h0000gp/T/abs_0a8f8rf2dq/croot/boltons_1737061714423/work
 Brotli @ file:///private/var/folders/k1/30mswbxs7r1g6zwn8y4fyt500000gp/T/abs_f7i0oxypt6/croot/brotli-split_1736182464088/work
 cachetools==6.2.1
@@ -54,7 +55,7 @@ jsonpointer==2.1
 langchain==1.0.3
 langchain-classic==1.0.0
 langchain-community==0.4.1
-langchain-core==1.0.1
+langchain-core==1.0.2
 langchain-google-genai==3.0.0
 langchain-groq==1.0.0
 langchain-openai==1.0.1

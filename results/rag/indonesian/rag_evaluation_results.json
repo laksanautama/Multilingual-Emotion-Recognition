@@ -1,0 +1,46 @@
+{
+    "predictions": [
+        [
+            "sedih",
+            "jijik"
+        ],
+        [
+            "sedih",
+            "terkejut",
+            "jijik"
+        ],
+        [
+            "terkejut",
+            "marah",
+            "jijik"
+        ],
+        [
+            "tanpa emosi"
+        ],
+        [
+            "marah",
+            "jijik"
+        ]
+    ],
+    "ground_truths": [
+        [
+            "anger",
+            "disgust"
+        ],
+        [
+            "sadness",
+            "surprise"
+        ],
+        [
+            "joy",
+            "surprise"
+        ],
+        [
+            "anger",
+            "fear"
+        ],
+        [
+            "disgust"
+        ]
+    ]
+}

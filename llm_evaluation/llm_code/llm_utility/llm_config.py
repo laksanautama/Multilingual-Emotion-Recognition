@@ -92,14 +92,21 @@ PROMPT_CONFIG = {
 
                     Patunjuk:
                     Pilih label sané pinih patut saking daftar ring ajeng. Ragane dados milih langkungan saking asiki label. Tentuang pasaut ragane antuk kruna 'Pasaut:' kalanturang antuk label saking daftar ring ajeng sane manggeh ring pitaken puniki, tur tulis penjelasan indik pilihan semetone sesampun kruna 'Alasan:'
-                    """
+                    """,
+
+    "SYSTEM_INSTRUCT" :"""### Emotion Recognition Task
+                        Given the text below, identify all emotions that apply.
+                        Available emotions: anger, disgust, fear, joy, sadness, surprise, no emotion.
+                        """
 
 }
 
 DIRECTORY_PATH = {
     "FEW_SHOT_RESULTS_DIR": "results/fs",
     "RAG_RESULTS_DIR": "results/rag",
-    "LORA_RESULTS_DIR": "results/lora"
+    "LORA_RESULTS_DIR": "results/lora",
+    "LORA_CHECKPOINTS_DIR": "llm_evaluation/lora_checkpoints",
+    "LORA_MODEL_DIR": "llm_evaluation/lora_model_save"
 }
 
 TRANSLATION_MAP = {

@@ -60,6 +60,7 @@ def docs_retrieval_processing(docs, lang):
   for doc in docs:
     str_emotion = doc.metadata['emotions'].strip("[]'").replace("'", "")
     en_emotion = 'no emotion' if str_emotion == '' else str_emotion
+    
     emotion = translate_label(en_emotion, lang)
     translated_text = translate_emotion_text(lang)
     text = f"{translated_text}{emotion}"
@@ -75,7 +76,7 @@ def rag_classifier(query, retriever, chain, labels, lang):
   """
   docs = retriever.invoke(query)
   context = docs_retrieval_processing(docs, lang)
-  labels.append('no emotion') #adding 'no emotion' label
+  labels.append('no emotion') 
   translated_label = []
   for lab in labels:
      tr_label = translate_label(lab, lang)

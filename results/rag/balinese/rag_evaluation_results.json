@@ -1,0 +1,49 @@
+{
+    "predictions": [
+        [
+            "seneb",
+            "sedih"
+        ],
+        [
+            "sedih",
+            "seneb",
+            "takut"
+        ],
+        [
+            "gedeg",
+            "seneb",
+            "makesiab"
+        ],
+        [
+            "gedeg",
+            "seneb",
+            "sedih",
+            "takut"
+        ],
+        [
+            "gedeg",
+            "seneb"
+        ]
+    ],
+    "ground_truths": [
+        [
+            "anger",
+            "disgust"
+        ],
+        [
+            "sadness",
+            "surprise"
+        ],
+        [
+            "joy",
+            "surprise"
+        ],
+        [
+            "anger",
+            "fear"
+        ],
+        [
+            "disgust"
+        ]
+    ]
+}
