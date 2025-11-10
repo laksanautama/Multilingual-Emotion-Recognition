@@ -1,6 +1,6 @@
 
 from transformers import AutoConfig, AutoTokenizer, AutoModelForSequenceClassification, Trainer, TrainingArguments, DataCollatorWithPadding
-from sklearn.metrics import accuracy_score, f1_score
+from sklearn.metrics import accuracy_score, f1_score, precision_recall_fscore_support, hamming_loss
 import os
 import torch
 import numpy as np
@@ -28,7 +28,18 @@ def compute_metrics(eval_pred):
 
     # Macro-F1 across all emotions
     f1_macro = f1_score(labels, binary_predictions, average="macro", zero_division=0)
-    return {"f1_macro": f1_macro}
+    accuracy = accuracy_score(labels, binary_predictions)
+
+    precision_macro, recall_macro, _, _ = precision_recall_fscore_support(labels, binary_predictions, average="macro", zero_division=0)
+    hamming = hamming_loss(labels, binary_predictions)
+
+
+    return {"f1_macro": f1_macro,
+            "accuracy": accuracy,
+            "precision_macro": precision_macro,
+            "recall_macro": recall_macro,
+            "hamming_loss": hamming
+            }
 
 
 def get_trainer(batch_size, epochs, lr, model, tokenizer, pos_weights, train_dataset, eval_dataset, lm_dir):
