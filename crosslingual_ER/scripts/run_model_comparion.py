@@ -2,7 +2,7 @@ from .model_configs import DATA_CONFIG, MODEL_PATHS, TRAINING_CONFIG, MODEL_CHEC
 from .data_loader import load_target_test_data, load_huggingface_dataset
 from .emotion_dataset import EmotionDataset
 from sklearn.model_selection import train_test_split
-from utils import check_lmmodel_exists, save_lmmodel, clear_gpu_memory
+from utils import check_lmmodel_exists, save_lmmodel, clear_gpu_memory, save_crosslingual_results
 from .classifier import get_trainer
 import os
 from transformers import AutoConfig, AutoTokenizer, AutoModelForSequenceClassification, Trainer, TrainingArguments, DataCollatorWithPadding
@@ -39,11 +39,6 @@ def run(keys: dict, lm_name: str):
         # val_data, test_data = train_test_split(test_dataset, test_size=0.5, random_state=TRAINING_CONFIG["SEED"], shuffle=True)
         source_dataset_train, pw_label_train = load_huggingface_dataset(DATA_CONFIG["SOURCE_HF_DATASET"], DATA_CONFIG["DATASET_LANGUAGES"], 'train', keys)
         print("Datasets loaded successfully.")
-        print(source_dataset_train[0])
-        print("val data: ")
-        print(val_dataset[0])
-        print("test data: ")
-        print(test_dataset[0])
 
     except FileNotFoundError as e:
         print(f"FATAL ERROR: {e}")
@@ -67,6 +62,22 @@ def run(keys: dict, lm_name: str):
         print(f"{'='*50}")
         trainer.train()
         print("Training completed.")
+        dev_results = trainer.evaluate()
+        model_result = {}
+        results = {
+                "eval_loss": dev_results["eval_loss"],
+                "f1_macro": dev_results["eval_f1_macro"],
+                "accuracy": dev_results["eval_accuracy"],
+                "precision_macro": dev_results["eval_precision_macro"],
+                "recall_macro": dev_results["eval_recall_macro"],
+                "hamming_loss": dev_results["eval_hamming_loss"]
+                }
+
+        model_result[lm_name] = results
+
+        print(f"f1_score: {results['f1_macro']}")
+        print(f"accuracy: {results['accuracy']}")
+        save_crosslingual_results(model_result)
         save_lmmodel(model, tokenizer, lm_name)
         clear_gpu_memory(model=model, tokenizer=tokenizer)
         del model
