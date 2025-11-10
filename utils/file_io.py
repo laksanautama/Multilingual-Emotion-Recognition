@@ -114,6 +114,33 @@ def save_analysis_results(results: dict, filename: str, task: str, prompt_langua
         
     print(f"Data successfully appended and saved to {filename_path}")
     
+def save_crosslingual_results(results: dict):
+    MAIN_DIR = os.path.dirname(os.path.dirname(__file__))
+    full_path = os.path.join(MAIN_DIR, "results", "crosslingual_ER")
+    filename_path = os.path.join(full_path, "crosslingual_results.json")
+
+    try:
+        
+        os.makedirs(full_path, exist_ok=True)
+
+        if os.path.exists(filename_path) and os.path.getsize(filename_path) > 0:
+            try:
+                with open(filename_path, 'r') as f:
+                    existing_data = json.load(f)
+            except json.JSONDecodeError:
+                existing_data = {}
+        else:
+            existing_data = {}
+        
+        existing_data.update(results)
+
+        with open(filename_path, 'w') as f:
+            json.dump(existing_data, f, indent=4)
+            
+        print(f"Crosslingual results successfully saved to {filename_path}")
+    except Exception as e:
+        print(f"Error saving crosslingual results: {e}")
+
 
 def load_json_file(filename: str, task: str, prompt_language: str = None):
     """ Load and return the contents of a JSON file. """
