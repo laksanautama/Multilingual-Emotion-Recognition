@@ -67,28 +67,22 @@ def load_target_test_data(filename: str, cross_lingual: bool = False):
     if not os.path.exists(file_path):
         raise FileNotFoundError(f"The file {filename} does not exist in the test data directory.")
     
-    print(f"Loading test data from: {file_path}")
-    try:
-        test_df = pd.read_csv(file_path)
-        print(f"Successfully loaded {len(test_df)} samples from {filename}.")
-        
-        if cross_lingual:
-            try:
-                target_dataset = Dataset.from_pandas(test_df)
-            except Exception as e:
-                print(f"Error converting test set from DataFrame to Dataset: {e}")
-                raise
+    test_df = pd.read_csv(file_path)
 
-            if '__index_level_0__' in target_dataset.column_names:
-                target_dataset = target_dataset.remove_columns(["__index_level_0__"])
-            mhe_dataset = target_dataset.map(get_label_binarizer)
-            val_data, test_data = mhe_dataset.train_test_split(test_size=0.5, seed=TRAINING_CONFIG["SEED"])
-            return val_data, test_data
-        else:
-            return test_df
-    except Exception as e:
-        print(f"Error loading {filename}: {e}")
-        raise
+    if cross_lingual:
+
+        target_dataset = Dataset.from_pandas(test_df)
+        print(f"Successfully loaded test dataset")
+        if '__index_level_0__' in target_dataset.column_names:
+            target_dataset = target_dataset.remove_columns(["__index_level_0__"])
+        mhe_target_dataset = target_dataset.map(get_label_binarizer)
+        split = mhe_target_dataset.train_test_split(test_size=0.5, seed=TRAINING_CONFIG["SEED"])
+        val_data = split['train']
+        test_data = split['test']
+        return val_data, test_data
+        
+    else:
+        return test_df
 
 def load_huggingface_dataset(dataset_name: str, dataset_lang: list, split: str, keys: dict):
     """ Load indonesia, java, and sunda language 

@@ -3,6 +3,7 @@ from transformers import AutoConfig, AutoTokenizer, AutoModelForSequenceClassifi
 from sklearn.metrics import accuracy_score, f1_score
 import os
 import torch
+import numpy as np
 
 class CustomTrainer(Trainer):
   def __init__(self, pos_weights, *args, **kwargs):

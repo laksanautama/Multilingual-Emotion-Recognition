@@ -35,11 +35,15 @@ def run(keys: dict, lm_name: str):
     """Placeholder function for running crosslingual ER tasks."""
     print("Running crosslingual tasks with provided API keys...")
     try:
-        test_dataset = load_target_test_data(DATA_CONFIG["TARGET_TEST_FILENAME"], cross_lingual=True)
-        val_data, test_data = train_test_split(test_dataset, test_size=0.5, random_state=TRAINING_CONFIG["SEED"], shuffle=True)
-        print("sucess split test data and val data")
+        val_dataset, test_dataset = load_target_test_data(DATA_CONFIG["TARGET_TEST_FILENAME"], cross_lingual=True)
+        # val_data, test_data = train_test_split(test_dataset, test_size=0.5, random_state=TRAINING_CONFIG["SEED"], shuffle=True)
         source_dataset_train, pw_label_train = load_huggingface_dataset(DATA_CONFIG["SOURCE_HF_DATASET"], DATA_CONFIG["DATASET_LANGUAGES"], 'train', keys)
         print("Datasets loaded successfully.")
+        print(source_dataset_train[0])
+        print("val data: ")
+        print(val_dataset[0])
+        print("test data: ")
+        print(test_dataset[0])
 
     except FileNotFoundError as e:
         print(f"FATAL ERROR: {e}")
@@ -48,13 +52,13 @@ def run(keys: dict, lm_name: str):
     except Exception as e:
         print(f"An unexpected error occurred: {e}")
     
-    
+   
     if check_lmmodel_exists(lm_name) == False:
         print(f"Model {lm_name} is not found. Proceeding with training...")
         tokenizer, model = load_lmmodel_config(lm_name)
 
         em_training_dataset = EmotionDataset(source_dataset_train, tokenizer, DATA_CONFIG["TRAIN_TEXT_COLUMN"], DATA_CONFIG["LABEL_COLUMN"], TRAINING_CONFIG["MAX_SEQ_LENGTH"])
-        em_test_dataset = EmotionDataset(val_data, tokenizer, DATA_CONFIG["TEST_TEXT_COLUMN"], DATA_CONFIG["LABEL_COLUMN"], TRAINING_CONFIG["MAX_SEQ_LENGTH"])
+        em_test_dataset = EmotionDataset(val_dataset, tokenizer, DATA_CONFIG["TEST_TEXT_COLUMN"], DATA_CONFIG["LABEL_COLUMN"], TRAINING_CONFIG["MAX_SEQ_LENGTH"])
 
         trainer = get_trainer(TRAINING_CONFIG['BATCH_SIZE'], TRAINING_CONFIG['EPOCHS'], TRAINING_CONFIG['LEARNING_RATE'], model, tokenizer, pw_label_train, em_training_dataset, em_test_dataset, MODEL_CHECKPOINTS[lm_name])
         # Train the model
@@ -71,6 +75,8 @@ def run(keys: dict, lm_name: str):
         # Add model evaluation logic here
     else:
         pass
+
+
 
     
     

@@ -14,6 +14,10 @@ class EmotionDataset(Dataset):
     
   def __getitem__(self, idx):
     item = self.dataset[idx]
+
+    if not isinstance(item, dict):
+      item = {self.text_column: item}
+
     text = str(item[self.text_column])
     labels = item[self.label_column]
         
