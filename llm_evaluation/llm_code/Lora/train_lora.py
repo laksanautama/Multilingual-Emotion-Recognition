@@ -1,4 +1,5 @@
 from crosslingual_ER.scripts.model_configs import MODEL_PATHS
+from .lora_config import load_lora_config
 from utils import clear_gpu_memory
 import pandas as pd
 import torch
@@ -10,13 +11,10 @@ from transformers import (
     AutoModelForCausalLM,
     DataCollatorForLanguageModeling,
     TrainingArguments,
-    BitsAndBytesConfig,
     Trainer
 )
 from peft import (
-    LoraConfig,
     get_peft_model,
-    TaskType,
     PeftModel
 )
 from llm_evaluation.llm_code.llm_utility.llm_config import PROMPT_CONFIG, DIRECTORY_PATH
@@ -25,21 +23,7 @@ def train_lora(train_data):
 
     PARENT_DIR = (os.path.dirname(os.path.dirname(__file__)))
 
-    bnb_config = BitsAndBytesConfig(
-                load_in_4bit=True,
-                bnb_4bit_use_double_quant=True,
-                bnb_4bit_quant_type="nf4",
-                bnb_4bit_compute_dtype=torch.float16,
-                )
-    
-    lora_config = LoraConfig(
-                task_type=TaskType.CAUSAL_LM,
-                r=8,
-                lora_alpha=16,
-                lora_dropout=0.05,
-                bias="none",
-                target_modules=["q_proj", "v_proj"]
-                )
+    bnb_config, lora_config = load_lora_config()
     
     model = AutoModelForCausalLM.from_pretrained(
             MODEL_PATHS["meta_llama"],
