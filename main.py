@@ -3,6 +3,7 @@ from utils import load_environment_variables
 from crosslingual_ER.scripts.run_model_comparion import run
 from llm_evaluation.llm_code.few_shot_adaptation.run_few_shot import run_fs
 from llm_evaluation.llm_code.rag.run_evaluation import run_rag
+from llm_evaluation.llm_code.lora.run_lora import run_lora
 import argparse
 # from crosslingual_ER.scripts.run_model_comparion import run_model_comparison 
 
@@ -54,7 +55,7 @@ def main():
                     run_fs(keys, args.llm_name, args.prompt_language)
                 elif task2_choice == '2':
                     print("Running LoRA Adaptation Method...")
-                    # run_model_comparison.run_rag_evaluation(keys)
+                    run_lora(keys)
                 elif task2_choice == '3':
                     print("Running RAG Adaptation Method ...")
                     run_rag(keys, args.llm_name, args.prompt_language)
