@@ -141,6 +141,16 @@ def save_crosslingual_results(results: dict):
     except Exception as e:
         print(f"Error saving crosslingual results: {e}")
 
+def save_lora_results(results: list):
+    """ Save LoRA results dictionary to a text file. """
+
+    MAIN_DIR = os.path.dirname(os.path.dirname(__file__))
+    full_path = os.path.join(MAIN_DIR, "results", "lora")
+    filename_path = os.path.join(full_path, "lora_results.json")
+    os.makedirs(full_path, exist_ok=True)
+    with open(filename_path, 'w') as f:
+        json.dump(results, f, indent=4)
+    print(f"LoRA Results saved to {filename_path}")
 
 def load_json_file(filename: str, task: str, prompt_language: str = None):
     """ Load and return the contents of a JSON file. """
