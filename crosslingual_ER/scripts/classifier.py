@@ -21,12 +21,10 @@ class CustomTrainer(Trainer):
 def compute_metrics(eval_pred):
     """Compute metrics for multi-label evaluation"""
     predictions, labels = eval_pred
-    # Apply sigmoid to the logits to get probabilities
     probabilities = 1 / (1 + np.exp(-predictions))
-    # Convert probabilities to binary predictions using a threshold (e.g., 0.5)
     binary_predictions = (probabilities > 0.5).astype(int)
 
-    # Macro-F1 across all emotions
+    # Metrics across all emotions
     f1_macro = f1_score(labels, binary_predictions, average="macro", zero_division=0)
     accuracy = accuracy_score(labels, binary_predictions)
 
