@@ -8,7 +8,6 @@ import json
 import os
 
 def run_rag(keys: dict, llm_model_name: str, prompt_language: str):
-    """Placeholder function for running RAG pipeline evaluation tasks."""
     print("-" * 20)
     print("Balinese Text Emotion Recognition using RAG Adaptation Method")
     print("-" * 20)
