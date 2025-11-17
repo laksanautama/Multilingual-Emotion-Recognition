@@ -2,8 +2,8 @@
 from langchain_community.vectorstores import FAISS
 from langchain_community.docstore.document import Document
 from langchain_google_genai import GoogleGenerativeAIEmbeddings
-from crosslingual_ER.scripts.model_configs import DATA_CONFIG
-from llm_evaluation.llm_code.llm_utility.llm_utility import llm_selection, translate_label, translate_emotion_text
+from utils import DATA_CONFIG
+from utils import llm_selection, translate_label, translate_emotion_text
 import os
 from langchain_classic.chains import RetrievalQA
 
