@@ -1,15 +1,25 @@
 {
     "predictions": [
         [
-            "disgust",
+            "anger",
             "sadness"
         ],
         [
-            "anger",
-            "fear"
+            "sadness"
+        ],
+        [
+            "sadness"
+        ],
+        [
+            "no emotion"
         ],
         [
             "anger",
+            "disgust"
+        ],
+        [
+            "anger",
+            "fear",
             "sadness",
             "surprise"
         ],
@@ -17,29 +27,53 @@
             "no emotion"
         ],
         [
-            "anger",
-            "fear"
+            "fear",
+            "sadness"
+        ],
+        [
+            "joy"
+        ],
+        [
+            "joy"
         ]
     ],
     "ground_truths": [
         [
             "anger",
+            "surprise"
+        ],
+        [
             "disgust"
+        ],
+        [
+            "anger"
         ],
         [
             "sadness",
             "surprise"
         ],
         [
-            "joy",
-            "surprise"
-        ],
-        [
             "anger",
+            "disgust",
             "fear"
         ],
         [
-            "disgust"
+            "disgust",
+            "sadness"
+        ],
+        [
+            "fear",
+            "surprise"
+        ],
+        [
+            "fear"
+        ],
+        [
+            "disgust",
+            "surprise"
+        ],
+        [
+            "no emotion"
         ]
     ]
 }

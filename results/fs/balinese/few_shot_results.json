@@ -5,13 +5,23 @@
             "no",
             "yes",
             "no",
+            "yes",
+            "yes",
+            "yes",
+            "no",
+            "no",
             "no"
         ],
         "ground_truths": [
             "yes",
             "no",
+            "yes",
             "no",
             "yes",
+            "no",
+            "no",
+            "no",
+            "no",
             "no"
         ]
     },
@@ -21,14 +31,24 @@
             "no",
             "yes",
             "no",
-            "no"
-        ],
-        "ground_truths": [
+            "yes",
             "yes",
             "no",
             "no",
+            "yes",
+            "no"
+        ],
+        "ground_truths": [
             "no",
-            "yes"
+            "yes",
+            "no",
+            "no",
+            "yes",
+            "yes",
+            "no",
+            "no",
+            "yes",
+            "no"
         ]
     },
     "fear": {
@@ -36,6 +56,11 @@
             "no",
             "no",
             "no",
+            "yes",
+            "yes",
+            "yes",
+            "yes",
+            "yes",
             "no",
             "no"
         ],
@@ -43,7 +68,12 @@
             "no",
             "no",
             "no",
+            "no",
             "yes",
+            "no",
+            "yes",
+            "yes",
+            "no",
             "no"
         ]
     },
@@ -53,27 +83,47 @@
             "no",
             "no",
             "no",
-            "no"
+            "no",
+            "no",
+            "no",
+            "no",
+            "no",
+            "yes"
         ],
         "ground_truths": [
             "no",
             "no",
-            "yes",
+            "no",
+            "no",
+            "no",
+            "no",
+            "no",
+            "no",
             "no",
             "no"
         ]
     },
     "sadness": {
         "predictions": [
+            "no",
             "yes",
             "yes",
             "yes",
+            "no",
             "yes",
-            "yes"
+            "yes",
+            "yes",
+            "no",
+            "no"
         ],
         "ground_truths": [
             "no",
+            "no",
+            "no",
             "yes",
+            "no",
+            "yes",
+            "no",
             "no",
             "no",
             "no"
@@ -82,16 +132,26 @@
     "surprise": {
         "predictions": [
             "no",
-            "yes",
-            "yes",
             "no",
+            "no",
+            "no",
+            "no",
+            "no",
+            "no",
+            "no",
+            "yes",
             "no"
         ],
         "ground_truths": [
-            "no",
-            "yes",
             "yes",
             "no",
+            "no",
+            "yes",
+            "no",
+            "no",
+            "yes",
+            "no",
+            "yes",
             "no"
         ]
     }

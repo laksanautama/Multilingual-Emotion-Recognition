@@ -1,49 +1,81 @@
 {
     "predictions": [
         [
-            "seneb",
+            "gedeg",
             "sedih"
         ],
         [
-            "sedih",
-            "seneb",
-            "takut"
-        ],
-        [
-            "gedeg",
-            "seneb",
-            "makesiab"
-        ],
-        [
-            "gedeg",
-            "seneb",
-            "sedih",
-            "takut"
+            "sedih"
         ],
         [
             "gedeg",
             "seneb"
+        ],
+        [
+            "gedeg",
+            "seneb"
+        ],
+        [
+            "gedeg",
+            "seneb"
+        ],
+        [
+            "sedih",
+            "gedeg",
+            "seneb"
+        ],
+        [
+            "seneb"
+        ],
+        [
+            "takut",
+            "seneb"
+        ],
+        [
+            "sukha",
+            "makesiab"
+        ],
+        [
+            "ten meduwe emosi"
         ]
     ],
     "ground_truths": [
         [
             "anger",
+            "surprise"
+        ],
+        [
             "disgust"
+        ],
+        [
+            "anger"
         ],
         [
             "sadness",
             "surprise"
         ],
         [
-            "joy",
-            "surprise"
-        ],
-        [
             "anger",
+            "disgust",
             "fear"
         ],
         [
-            "disgust"
+            "disgust",
+            "sadness"
+        ],
+        [
+            "fear",
+            "surprise"
+        ],
+        [
+            "fear"
+        ],
+        [
+            "disgust",
+            "surprise"
+        ],
+        [
+            "no emotion"
         ]
     ]
 }

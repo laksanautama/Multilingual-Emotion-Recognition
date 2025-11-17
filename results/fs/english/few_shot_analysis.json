@@ -1,0 +1,28 @@
+{
+    "english": {
+        "text": [
+            1.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            1.0,
+            0.0,
+            1.0,
+            0.0
+        ],
+        "justification": [
+            "the sentence expresses a possibility or speculation (\"mirib\" - perhaps) about people's feelings, rather than describing a sudden, unexpected event or a revelation that would cause surprise. there are no linguistic markers of surprise such as suddenness, unexpectedness, or a twist in events.\n\nanswer: no",
+            "the text \"wantuan jlema lacur ento luh\" translates to \"that's help for poor people, luh.\" this is a straightforward statement or observation. it does not contain any elements of suddenness, unexpected revelation, or a contradiction of what would normally be expected, which are characteristics of surprise seen in the 'yes' examples.\n\nanswer: no",
+            "the text expresses a long-standing feeling of being fed up (\"suba med uli i pidan\"). there is no indication of an unexpected event, a sudden realization, or a reaction of shock or wonder. the \"nah!\" acts as an emphatic declaration or resignation, not surprise.\n\nanswer: no",
+            "reasoning: the conjunction \"diastun\" (even though) introduces a contrast between i arok's past as a pickpocket and his losing a fight. this implies that his background might have led to an expectation of a different outcome (e.g., being more capable in a confrontation or avoiding such a loss), making his defeat somewhat unexpected or surprising.\n\nanswer: yes",
+            "the text describes the speaker feeling \"jengah gati\" (very annoyed/irritated/offended) after someone who was drinking sake tried to hug them. this emotion indicates annoyance or discomfort, not surprise. there are no linguistic cues or reactions in the text that suggest an unexpected event or a state of being surprised.\n\nanswer: no",
+            "the text describes a mother's long-standing heartache (\"sakit ati\") leading her to advise her husband to stop certain behaviors. there are no words or phrases indicating a sudden, unexpected event, a surprising discovery, or an abrupt change in circumstances. it's a reaction to an ongoing situation rather than a moment of surprise.\n\nanswer: no",
+            "the text expresses speculation and a tentative confirmation of a previous rumor, rather than a reaction to an unexpected event or a sudden, astonishing realization. there are no linguistic markers indicating surprise or shock.\n\nanswer: no",
+            "the text describes a lasting consequence or a firm resolve (\"since then, i really don't dare to go against my father's request\"). it states a change in behavior or attitude, but it does not describe a sudden, unexpected event, a revelation, or a startled reaction that would indicate surprise.\n\nanswer: no",
+            "the text describes the joged dance becoming more intense and the dancer daringly removing clothes. while this action might be provocative, the phrasing \"sada bani ngelesang\" (daringly removing) presents it as an intentional and escalating part of the performance, rather than an unexpected event that causes surprise to the narrator or observer. there are no linguistic cues like 'suddenly', 'unexpectedly', or expressions of shock.\n\nanswer: no",
+            "the sentence \"somahne mula adung-adungan somah tiange\" states that his/her spouse is truly compatible with my spouse. this is a statement of fact or observation about compatibility, emphasized by \"mula\" (truly/indeed), but it does not contain any elements that suggest an unexpected event, a sudden change, or an emotional reaction of surprise.\n\nanswer: no"
+        ]
+    }
+}
