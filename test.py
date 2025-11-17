@@ -1,24 +1,17 @@
-import transformers
-print(transformers.__version__)
-# string = """pasaur: sedih, seneb
-# alasan: teks puniki ngeninin indik pangrasa nyesel lan nyelsel dewek indik solah sane nenten patut ring sajeroning tata krama, utaminipun dados anak luh sane nenten mrasidayang ngemban dewek. pangrasa nyesel punika lumrahnyane ngawetuang rasa sedih (sadness) lan rasa jengah utawi gedeg ring dewek (self-disgust/fed up), sane kasinahang antuk kruna 'seneb' ring basa bali. puniki pateh ring konteks conto sane ngawetuang 'disgust, sadness' rikala wenten pangrasa pelih utawi nyesel.
-# """
+string = """jawaban: ya
+alasan: teks tersebut menggambarkan kejadian yang tidak terduga, yaitu seseorang yang tiba-tiba ingin memeluk, yang memicu reaksi menghindar ('makelid') dan perasaan jengkel/marah ('jengah gati tiang') dari pembicara. reaksi menghindar dan perasaan jengkel ini merupakan respons terhadap sesuatu yang mengejutkan atau tidak diinginkan.
+Input: Suud ngajum tiang lantas nagih ngelut. Tiang makelid. Ada ane sedek nginem sake nagih ngelut. Jengah gati tiang.
+"""
 
-# temp_content = string.split("pasaur:")[1]
-# parts = temp_content.split("\nalasan:")
-
-# print(f"size of parts: {len(parts)}")
-# answer = parts[0].strip() 
-# reason = parts[1].strip()
-
-# # print(f"Jawaban: {answer}")
-# # print(f"Alasan: {reason}")
-
-# print("Jawaban: ")
-# print(answer + ". " +reason)
-
-# string = ["no emotion", "sadness"]
-# join_string = ", ".join(string)
-# string = "nothing"
-# join_string = string.split(", ")
-# print(join_string)
+def convert_output_text(output_text: str):
+    """Convert the output text from the LLM to standardized 'yes' or 'no'."""
+    output_text = output_text.strip().lower()
+    if 'jawaban: ya' in output_text:
+        return 'yes'
+    elif 'jawaban: tidak' in output_text:
+        return 'no'
+    else:
+            # Return a default or handle cases where neither 'ya' nor 'tidak' is found
+        return 'no'
+    
+print(f"Converted output text: {convert_output_text(string)}")
