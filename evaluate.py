@@ -1,7 +1,7 @@
 import argparse
-from utils import load_json_file, get_folder_name
-from crosslingual_ER.scripts.model_configs import DATA_CONFIG
-from llm_evaluation.llm_code.llm_utility.llm_config import DIRECTORY_PATH
+from utils import load_json_file, get_folder_name, translate_label
+from utils import DATA_CONFIG
+from utils import DIRECTORY_PATH
 from sklearn.preprocessing import MultiLabelBinarizer
 from sklearn.metrics import (
     f1_score, accuracy_score, hamming_loss, jaccard_score
@@ -30,17 +30,33 @@ def evaluate_rag():
     """Function to evaluate RAG adaptation results."""
     print("Evaluating RAG Adaptation Results...")
 
-    column_names = DATA_CONFIG["LABELS"].append("no emotion")
-    mlb = MultiLabelBinarizer(classes=column_names)
-    mlb.fit([[]])
-    rag_results = load_json_file("rag_evaluation_results", 'rag')
-    y_true = mlb.fit_transform(rag_results["ground_truths"])
-    y_pred = mlb.fit_transform(rag_results["predictions"])    
-    print("Exact Match Ratio:", accuracy_score(y_true, y_pred))
-    print("Hamming Loss:", hamming_loss(y_true, y_pred))
-    print("Micro-F1:", f1_score(y_true, y_pred, average='micro'))
-    print("Macro-F1:", f1_score(y_true, y_pred, average='macro'))
-    print("Jaccard (samples):", jaccard_score(y_true, y_pred, average='samples'))
+    column_names = DATA_CONFIG["LABELS"]
+    column_names.append('no emotion')
+    print(f"Column Names for Binarizer: {column_names}")
+
+    dir_path = DIRECTORY_PATH["RAG_RESULTS_DIR"]
+    prompt_lang = get_folder_name(dir_path)
+    mlb_en = MultiLabelBinarizer(classes=column_names)
+    mlb_en.fit([column_names])
+
+    for lang in prompt_lang:
+        print(f"\n--- Evaluating for Prompt Language: {lang} ---")
+        lang_col_names = translate_label(column_names, lang)
+        mlb = MultiLabelBinarizer(classes=lang_col_names)
+        mlb.fit([lang_col_names])
+        rag_results = load_json_file("rag_evaluation_results", 'rag', lang)
+        truths = rag_results['ground_truths']
+        preds = rag_results['predictions']
+        
+        y_true = mlb_en.transform(truths)
+        y_pred = mlb.transform(preds)
+        # print(f"Ground truth: {y_true}")
+        # print(f"Predictions: {y_pred}")   
+        print("Exact Match Ratio:", accuracy_score(y_true, y_pred))
+        print("Hamming Loss:", hamming_loss(y_true, y_pred))
+        print("Micro-F1:", f1_score(y_true, y_pred, average='micro'))
+        print("Macro-F1:", f1_score(y_true, y_pred, average='macro'))
+        print("Jaccard (samples):", jaccard_score(y_true, y_pred, average='samples'))
 
 
         
