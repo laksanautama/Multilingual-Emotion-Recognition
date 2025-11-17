@@ -63,7 +63,9 @@ def run(keys: dict, lm_name: str):
     print("Starting Training...")
     print(f"{'='*50}")
     trainer.train()
-    print("Training completed.")
+    print("-"*20)
+    print("Training completed...!")
+    print("-"*20)
     dev_results = trainer.evaluate()
     model_result = {}
     results = {
