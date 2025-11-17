@@ -1,7 +1,7 @@
 #1. DATA CONFIGURATIONS
 # ------------------------------------------
 DATA_CONFIG = {
-    "TARGET_TEST_FILENAME": "balinesse_storiette.csv",
+    "TARGET_TEST_FILENAME": "balinesse_storiette_v1.csv",
     "SOURCE_HF_DATASET": "brighter-dataset/BRIGHTER-emotion-categories",
     "TEST_DATA_DIR": "data/test_data",
     "FAISS_INDEX_DIR": "data/faiss_index",
@@ -15,8 +15,8 @@ DATA_CONFIG = {
     "LABEL_COLUMN": "labels",
     "DATASET_LANGUAGES": ["ind", "jav", "sun"],
     "TRAIN_SPLIT_SIZE": 0.5,
-    "NUM_TRAIN_SAMPLES_PER_CLASS": 8,
-    "NUM_VAL_SAMPLES": 5,
+    "NUM_TRAIN_SAMPLES_PER_CLASS": 10,
+    "NUM_VAL_SAMPLES": 10,
     "RAG_TOP_K": 5,
     "EMBEDDING_MODEL": "text-embedding-004"
 }
