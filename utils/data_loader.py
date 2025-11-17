@@ -1,6 +1,6 @@
 import os
 import pandas as pd
-from utils import DATA_CONFIG, TRAINING_CONFIG
+from .model_config import DATA_CONFIG, TRAINING_CONFIG
 from datasets import load_dataset, Dataset, concatenate_datasets
 from huggingface_hub import login
 import numpy as np
