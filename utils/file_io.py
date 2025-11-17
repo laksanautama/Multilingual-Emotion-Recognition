@@ -1,8 +1,8 @@
-from crosslingual_ER.scripts.data_loader import load_target_test_data
+from .data_loader  import load_target_test_data
 from sklearn.model_selection import train_test_split
-from crosslingual_ER.scripts.model_configs import TRAINING_CONFIG, DATA_CONFIG, MODEL_SAVE, MODEL_CHECKPOINTS
-from llm_evaluation.llm_code.llm_utility.llm_config import DIRECTORY_PATH
-from llm_evaluation.llm_code.llm_utility.llm_utility import translate_label, translate_answer, select_language_config
+from .model_config import TRAINING_CONFIG, DATA_CONFIG, MODEL_SAVE, MODEL_CHECKPOINTS
+from .llm_configs import DIRECTORY_PATH
+from .llm_utility import translate_label, translate_answer, select_language_config
 import pandas as pd
 import math
 import json
@@ -27,12 +27,13 @@ def create_train_examples(train_dataset, emotion, total_samples: int, prompt_lan
         samples_1 = train_dataset[train_dataset[emotion] == 1].sample(n_samples_1, random_state=TRAINING_CONFIG["SEED"])
         samples_0 = train_dataset[train_dataset[emotion] == 0].sample(n_samples_0, random_state=TRAINING_CONFIG["SEED"])
         samples_full = pd.concat([samples_1, samples_0])
-        _, _, _, _, input_key, answer_key = select_language_config(prompt_language)
-        
+        # _, _, _, _, input_key, answer_key = select_language_config(prompt_language)
+        config = select_language_config(prompt_language)
+
         for i in range(len(samples_full)):
             en_answer = 'yes' if samples_full[emotion].iloc[i] == 1 else 'no'
             answer = translate_answer(en_answer, prompt_language)
-            example.append({input_key: samples_full['sentence'].iloc[i], answer_key: answer})
+            example.append({config['input']: samples_full['sentence'].iloc[i], config['answer']: answer})
 
         return example
     
