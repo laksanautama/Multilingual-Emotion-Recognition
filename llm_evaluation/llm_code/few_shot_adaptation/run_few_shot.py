@@ -1,7 +1,7 @@
 # from llm_model_selection import llm_selection
 from llm_evaluation.llm_code.llm_utility.llm_utility import llm_selection, classify_text, select_language_config
 from utils import llm_dataset_preparation, create_train_examples, create_val_examples, save_results_to_file, save_analysis_results
-from crosslingual_ER.scripts.model_configs import DATA_CONFIG
+from utils import DATA_CONFIG
 from ..llm_utility.llm_config import PROMPT_CONFIG
 import logging
 from langchain_core.prompts import PromptTemplate, FewShotPromptTemplate
