@@ -21,6 +21,7 @@ from .llm_configs import PROMPT_CONFIG, TRANSLATION_MAP, DIRECTORY_PATH
 from .llm_utility import (select_language_config, 
                           convert_output_text,
                           classify_text,
+                          multiagents_classify_text,
                           translate_label,
                           translate_answer,
                           translate_emotion_text,
