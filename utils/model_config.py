@@ -15,8 +15,8 @@ DATA_CONFIG = {
     "LABEL_COLUMN": "labels",
     "DATASET_LANGUAGES": ["ind", "jav", "sun"],
     "TRAIN_SPLIT_SIZE": 0.5,
-    "NUM_TRAIN_SAMPLES_PER_CLASS": 10,
-    "NUM_VAL_SAMPLES": 10,
+    "NUM_TRAIN_SAMPLES_PER_CLASS": 100,
+    "NUM_VAL_SAMPLES": 30,
     "RAG_TOP_K": 5,
     "EMBEDDING_MODEL": "text-embedding-004"
 }
