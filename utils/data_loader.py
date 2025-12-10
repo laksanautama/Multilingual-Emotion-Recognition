@@ -96,18 +96,21 @@ def load_huggingface_dataset(dataset_name: str, dataset_lang: list, split: str, 
         print("Warning: Hugging Face Token not provided. Will only be able to access public models/datasets.")
     print(f"dataset name: {dataset_name}")
     loaded_datasets = []
+
     for lang in dataset_lang:
         loaded = False
         try:
             dataset = load_dataset(dataset_name, lang, split=split)
+            dataset = dataset.add_column("language", [lang] * len(dataset))
             print(f"Successfully loaded {lang} samples with split: {split}")
             loaded_datasets.append(dataset)
             loaded = True
         except ValueError as e:
             if "Split 'train' not found" in str(e) or "Should be one of ['dev', 'test']" in str(e):
                 try:
-                    dataset = load_dataset(dataset_name, lang, split='dev')
-                    print(f"Successfully loaded {lang} samples with split: 'dev'")
+                    dataset = load_dataset(dataset_name, lang, split='test')
+                    dataset = dataset.add_column("language", [lang] * len(dataset))
+                    print(f"Successfully loaded {lang} samples with split: 'test'")
                     loaded_datasets.append(dataset)
                     loaded = True
                 except Exception as e:
