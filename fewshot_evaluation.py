@@ -1,6 +1,6 @@
 # from llm_model_selection import llm_selection
 from utils import llm_selection, classify_text, select_language_config
-from utils import llm_dataset_preparation, create_train_examples, create_val_examples, save_results_to_file, save_analysis_results
+from utils import llm_dataset_preparation, create_train_examples, create_val_examples, save_results_to_file, save_analysis_results, load_target_test_data, load_huggingface_dataset
 from utils import DATA_CONFIG, PROMPT_CONFIG
 from langchain_core.prompts import PromptTemplate, FewShotPromptTemplate
 import argparse
@@ -14,12 +14,17 @@ def run_fs(keys: dict, llm_model_name: str, prompt_language: str, evaluation: bo
     print("Balinese Text Emotion Recognition using Few-Shot Adaptation")
     print("-" * 20)
 
-    llm_model = llm_selection(llm_model_name, keys)
-    train_data, val_data = llm_dataset_preparation(DATA_CONFIG["TARGET_TEST_FILENAME"], DATA_CONFIG["TRAIN_SPLIT_SIZE"])
+    mdl = llm_selection(keys, llm_model_name)
+    llm_model = mdl[llm_model_name]
+    val_data = load_target_test_data(DATA_CONFIG["TARGET_TEST_FILENAME"], cross_lingual=False)
+    train_data, __ = load_huggingface_dataset(DATA_CONFIG["SOURCE_HF_DATASET"], DATA_CONFIG["DATASET_LANGUAGES"], 'train', keys)
+    # train_data, val_data = llm_dataset_preparation(DATA_CONFIG["TARGET_TEST_FILENAME"], DATA_CONFIG["TRAIN_SPLIT_SIZE"])
     val_data_samples = create_val_examples(val_data, DATA_CONFIG["NUM_VAL_SAMPLES"])
 
     emotion_results = {}
     emotion_analysis = {}
+    emotion_justification = {}
+
     
     config = select_language_config(prompt_language)
     
@@ -41,7 +46,6 @@ def run_fs(keys: dict, llm_model_name: str, prompt_language: str, evaluation: bo
         
         predictions = []
         ground_truths = []
-        text = []
         justification = []
 
         for i in range(len(val_data_samples)):
@@ -53,22 +57,21 @@ def run_fs(keys: dict, llm_model_name: str, prompt_language: str, evaluation: bo
             print("+"*20)
             predictions.append(result)
             ground_truths.append(ground_truth)
-            text.append(val_data_samples[emotion].iloc[i])
             justification.append(output_text)
-        
 
-        
+        emotion_justification[emotion] = justification
+       
         emotion_results[emotion] = {"predictions": predictions, 
                                     "ground_truths": ground_truths
                                     }
         
-    emotion_analysis[prompt_language] = {'text': text,
-                                         'justification': justification}
+    emotion_analysis[llm_model_name] = {'text': list(val_data_samples['sentence']),
+                                         'justification': emotion_justification}
 
     results_filename = "few_shot_results"
     mer_analysis_filename = "few_shot_analysis"
-    save_results_to_file(emotion_results, results_filename, 'few_shot', prompt_language)
-    save_analysis_results(emotion_analysis, mer_analysis_filename, 'few_shot', prompt_language)
+    save_results_to_file(emotion_results, results_filename, 'few_shot', llm_model_name)
+    save_analysis_results(emotion_analysis, mer_analysis_filename, 'few_shot', llm_model_name)
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
