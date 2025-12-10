@@ -1,1 +1,1 @@
-from .llm_code.rag.rag_pipeline import store_vectors_database, rag_retriever, rag_classifier
+from .llm_code.rag.rag_pipeline import store_vectors_database, rag_retriever, rag_classifier, bin_rag_classifier
