@@ -197,12 +197,13 @@ def getRevision(peers_review, text, emotion, answer, model):
     return new_answer, new_reason
 
 def summarizer(reason, model):
+    combined_text = "\n".join(reason)
     summary_prompt = PromptTemplate(
                     input_variables=["text"],
                     template="Summarize the following text:\n\n{text}"
                     )
     chain = summary_prompt | model
-    summaries = [chain.invoke({"text": t}).content for t in reason]
+    summaries = chain.invoke({"text": combined_text}).content
     return summaries
 
 def multiagents_classify_text(text, model_list, fs_prompt, emotion):
@@ -248,7 +249,7 @@ def multiagents_classify_text(text, model_list, fs_prompt, emotion):
     
     #get the answer with most vote
     voting_answer, reason, win_voters = mayor_vote(revision)
-    reason_summary = summarizer(reason, model_list["gemini-2.5-flash"])
+    reason_summary = summarizer(reason, model_list["qwen3-32b"])
     final_result = {
                     "final_answer": voting_answer,
                     "final_reason": reason_summary,
@@ -404,11 +405,23 @@ def llm_selection(keys:dict, llm_model_name:str = None):
             temperature=0.3,
         )
         return {"deepseek-reasoner": llm_model}
+    
+    def get_kimik2_model():
+        if "GROQ_API_KEY" not in os.environ:
+            os.environ["GROQ_API_KEY"] = keys.get("GROQ_API_KEY") or getpass.getpass(
+                "Enter your GROQ API Key: "
+            )
+        llm_model = ChatGroq(
+            model="moonshotai/kimi-k2-instruct-0905",
+            temperature=0.3,
+        )
+        return {"kimi-k2-instruct-0905": llm_model}
 
     # --- Return all models case ---
     if llm_model_name is None:
         all_models = {}
-        all_models.update(get_google_model())
+        #all_models.update(get_google_model())
+        all_models.update(get_kimik2_model())
         all_models.update(get_qwen_model())
         all_models.update(get_llama_model())
         #all_models.update(get_deepseek_model())
@@ -425,6 +438,8 @@ def llm_selection(keys:dict, llm_model_name:str = None):
         return get_deepseek_model()
     elif name == "llama-3.3-70b":
         return get_llama_model()
+    elif name == "kimi-k2-instruct-0905":
+        return get_kimik2_model()
     else:
         raise ValueError(f"Unsupported LLM model name: {llm_model_name}")
     
