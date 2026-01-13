@@ -22,9 +22,7 @@ def run_rag(keys: dict, llm_model_name: str, prompt_language: str):
                             DATA_CONFIG["TEST_DATA_DIR"],
                             DATA_CONFIG["TARGET_TEST_FILENAME"]
                             )
-    #train_data, val_data = llm_dataset_preparation(DATA_CONFIG["TARGET_TEST_FILENAME"], DATA_CONFIG["TRAIN_SPLIT_SIZE"])
     val_data = pd.read_csv(filepath)
-    #val_data = load_target_test_data(DATA_CONFIG["TARGET_TEST_FILENAME"], cross_lingual=False)
     train_data, __ = load_huggingface_dataset(DATA_CONFIG["SOURCE_HF_DATASET"], DATA_CONFIG["DATASET_LANGUAGES"], 'train', keys)
     val_samples = create_val_examples(val_data, DATA_CONFIG["NUM_VAL_SAMPLES"])
 
@@ -42,11 +40,6 @@ def run_rag(keys: dict, llm_model_name: str, prompt_language: str):
     )
     chain = classification_prompt | llm
 
-    # results = []
-    # ground_truths = []
-    # val_text = []
-    # label_result = []
-
     emotions = DATA_CONFIG["LABELS"]
     lang = prompt_language
 
@@ -57,9 +50,7 @@ def run_rag(keys: dict, llm_model_name: str, prompt_language: str):
 
     for emo in emotions:
         print(f"Target Emotion for Retrieval: {emo}")
-        # pos_retriever = rag_retriever(llm_model_name, keys, DATA_CONFIG["RAG_TOP_K"], emotion = emo, positive=True)
-        # neg_retriever = rag_retriever(llm_model_name, keys, DATA_CONFIG["RAG_TOP_K"], emotion = emo, positive=False)
-
+   
         predictions = []
         ground_truths = []
         justification = []
@@ -112,51 +103,6 @@ def run_rag(keys: dict, llm_model_name: str, prompt_language: str):
     save_results_to_file(emotion_results, results_filename, 'rag', llm_model_name)
     save_analysis_results(emotion_analysis, mer_analysis_filename, 'rag', llm_model_name)
 
-
-    """
-    for _, row in val_samples.iterrows():
-        print(row['sentence'])
-        
-        label = rag_classifier(
-            query = row['sentence'],
-            retriever = retriever,
-            chain = chain,
-            labels = DATA_CONFIG["LABELS"],
-            lang = prompt_language
-          )
-        label_content = label.content.lower()
-        print(f"Reason: {label_content}")
-        print("-" * 15)
-
-        answer, reason = strip_result_content(label_content, config['answer'], config['reason'])       
-        val_data_emotions = row['emotions'].strip("[]").replace("'", "")
-        emotion = 'no emotion' if val_data_emotions == '' else val_data_emotions
-
-        clean = answer.split(", ")
-        val_data_clean = emotion.split(", ")
-
-        ground_truths.append(val_data_clean)
-        results.append(clean)
-        val_text.append(row['sentence'])
-        label_result.append(answer +". "+ reason)
-
-    print("Evaluation completed.")
-    print("Saving results...")
-    data_to_save = {
-        "predictions": results,
-        "ground_truths": ground_truths
-    }
-
-    rag_analysis = {
-        "text": val_text,
-        "llm_result": label_result
-    }
-
-    results_filename = "rag_evaluation_results"
-    mer_analysis_filename = "rag_analysis"
-    save_results_to_file(data_to_save, results_filename, 'rag', prompt_language)
-    save_analysis_results(rag_analysis, mer_analysis_filename, 'rag', prompt_language)
-    """
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
