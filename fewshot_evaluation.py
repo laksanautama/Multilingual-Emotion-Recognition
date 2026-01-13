@@ -18,7 +18,6 @@ def run_fs(keys: dict, llm_model_name: str, prompt_language: str, evaluation: bo
     llm_model = mdl[llm_model_name]
     val_data = load_target_test_data(DATA_CONFIG["TARGET_TEST_FILENAME"], cross_lingual=False)
     train_data, __ = load_huggingface_dataset(DATA_CONFIG["SOURCE_HF_DATASET"], DATA_CONFIG["DATASET_LANGUAGES"], 'train', keys)
-    # train_data, val_data = llm_dataset_preparation(DATA_CONFIG["TARGET_TEST_FILENAME"], DATA_CONFIG["TRAIN_SPLIT_SIZE"])
     val_data_samples = create_val_examples(val_data, DATA_CONFIG["NUM_VAL_SAMPLES"])
 
     emotion_results = {}
@@ -75,7 +74,7 @@ def run_fs(keys: dict, llm_model_name: str, prompt_language: str, evaluation: bo
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument('--llm_model_name', type=str, default='gemini-2.5-flash')
+    parser.add_argument('--llm_model_name', type=str, default='kimi-k2-instruct-0905')
     parser.add_argument('--prompt_language', type=str, default='english', help='Language for the prompt (english/indonesian/balinese)')
     args = parser.parse_args()
 
