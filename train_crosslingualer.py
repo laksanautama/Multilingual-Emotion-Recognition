@@ -21,13 +21,6 @@ def load_lmmodel_config(lm_name: str):
     model = AutoModelForSequenceClassification.from_pretrained(MODEL_NAME, config=config)
     
     return tokenizer, model
-
-#this code below will be moved to main.py later
-# def inference_lmmodel(model_name: str, test_data):
-#     MAIN_DIR = (os.path.dirname(__file__))
-#     saved_model_dir = os.path.join(MAIN_DIR, MODEL_SAVE[model_name])
-#     tokenizer = AutoTokenizer.from_pretrained(saved_model_dir, use_fast=True)
-#     model = AutoModelForSequenceClassification.from_pretrained(saved_model_dir)
     
 
 def run(keys: dict, lm_name: str):
