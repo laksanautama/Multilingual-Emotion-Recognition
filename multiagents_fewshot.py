@@ -46,6 +46,8 @@ def run_fs(keys: dict, prompt_language: str, evaluation: bool = True):
         predictions = []
         ground_truths = []
         justification = []
+        winner = []
+        initial_results = []
         mcp = []
 
         for i in range(len(val_data_samples)):
@@ -58,6 +60,8 @@ def run_fs(keys: dict, prompt_language: str, evaluation: bool = True):
             predictions.append(result["final_answer"])
             ground_truths.append(ground_truth)
             justification.append(result["final_reason"])
+            winner.append(result["winner_model"])
+            initial_results.append(result["model_initial_answer"])  
             mcp.extend(result["models_change_perspective"])
 
         emotion_justification[emotion] = justification
@@ -65,8 +69,8 @@ def run_fs(keys: dict, prompt_language: str, evaluation: bool = True):
         emotion_results[emotion] = {"predictions": predictions, 
                                     "ground_truths": ground_truths,
                                     "models_change_itsperspective": mcp_occurence,
-                                    "models_initial_answer": result["model_initial_answer"],
-                                    "winner_model": result["winner_model"],
+                                    "winner_model": winner,
+                                    "models_initial_answer": initial_results,
                                     "models_final_answer": result["model_revision"]
                                     }
         
