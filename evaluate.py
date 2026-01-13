@@ -28,7 +28,7 @@ def evaluate_score(task: str):
     elif task == 'evaluate_multiagents':
         dir_path = DIRECTORY_PATH["MULTIAGENTS_RESULT_DIR"]
         result_type = 'multiagents'
-        filename = 'multiagents_results'
+        filename = 'multiagents_results-50'
 
     llm_model = get_folder_name(dir_path)
     for model in llm_model:
